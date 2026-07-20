@@ -58,6 +58,10 @@ filters:
     - vp
     - vice president
     - executive
+    - staff
+    - manager
+    - lead
+    - principal
   allow_internships: false
 
 companies:
