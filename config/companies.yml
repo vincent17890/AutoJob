@@ -48,7 +48,7 @@ filters:
     - Sunnyvale
     - Mountain View
     - Palo Alto
-  remote_allowed: false
+  remote_allowed: true
   employment_types:
     - full-time
     - full time
