@@ -65,6 +65,20 @@ filters:
   allow_internships: false
 
 companies:
+  - name: Adobe
+    slug: adobe
+    enabled: true
+    source_type: workday
+    ats_identifier: adobe
+    careers_url: https://adobe.wd5.myworkdayjobs.com/external_experienced
+    api_endpoint: https://adobe.wd5.myworkdayjobs.com/wday/cxs/adobe/external_experienced/jobs
+    location_filters:
+      - United States
+      - San Jose
+      - Sunnyvale
+      - Mountain View
+      - Palo Alto
+
   - name: Cash App
     slug: cash-app
     enabled: true
@@ -149,6 +163,20 @@ companies:
       - Mountain View
       - Palo Alto
 
+  - name: General Motors
+    slug: general-motors
+    enabled: true
+    source_type: workday
+    ats_identifier: generalmotors
+    careers_url: https://generalmotors.wd5.myworkdayjobs.com/Careers_GM
+    api_endpoint: https://generalmotors.wd5.myworkdayjobs.com/wday/cxs/generalmotors/Careers_GM/jobs
+    location_filters:
+      - United States
+      - San Jose
+      - Sunnyvale
+      - Mountain View
+      - Palo Alto
+
   - name: Harvey
     slug: harvey
     enabled: true
@@ -163,6 +191,20 @@ companies:
       - Mountain View
       - Palo Alto
 
+  - name: HPE
+    slug: hpe
+    enabled: true
+    source_type: workday
+    ats_identifier: hpe
+    careers_url: https://hpe.wd5.myworkdayjobs.com/Jobsathpe
+    api_endpoint: https://hpe.wd5.myworkdayjobs.com/wday/cxs/hpe/Jobsathpe/jobs
+    location_filters:
+      - United States
+      - San Jose
+      - Sunnyvale
+      - Mountain View
+      - Palo Alto
+
   - name: Instacart
     slug: instacart
     enabled: true
@@ -170,6 +212,62 @@ companies:
     ats_identifier: instacart
     careers_url: https://job-boards.greenhouse.io/instacart
     api_endpoint: https://boards-api.greenhouse.io/v1/boards/instacart/jobs?content=true
+    location_filters:
+      - United States
+      - San Jose
+      - Sunnyvale
+      - Mountain View
+      - Palo Alto
+
+  - name: Intel
+    slug: intel
+    enabled: true
+    source_type: workday
+    ats_identifier: intel
+    careers_url: https://intel.wd1.myworkdayjobs.com/External
+    api_endpoint: https://intel.wd1.myworkdayjobs.com/wday/cxs/intel/External/jobs
+    location_filters:
+      - United States
+      - San Jose
+      - Sunnyvale
+      - Mountain View
+      - Palo Alto
+
+  - name: KLA
+    slug: kla
+    enabled: true
+    source_type: workday
+    ats_identifier: kla
+    careers_url: https://kla.wd1.myworkdayjobs.com/Search
+    api_endpoint: https://kla.wd1.myworkdayjobs.com/wday/cxs/kla/Search/jobs
+    location_filters:
+      - United States
+      - San Jose
+      - Sunnyvale
+      - Mountain View
+      - Palo Alto
+
+  - name: Mastercard
+    slug: mastercard
+    enabled: true
+    source_type: workday
+    ats_identifier: mastercard
+    careers_url: https://mastercard.wd1.myworkdayjobs.com/CorporateCareers
+    api_endpoint: https://mastercard.wd1.myworkdayjobs.com/wday/cxs/mastercard/CorporateCareers/jobs
+    location_filters:
+      - United States
+      - San Jose
+      - Sunnyvale
+      - Mountain View
+      - Palo Alto
+
+  - name: NVIDIA
+    slug: nvidia
+    enabled: true
+    source_type: workday
+    ats_identifier: nvidia
+    careers_url: https://nvidia.wd5.myworkdayjobs.com/NVIDIAExternalCareerSite
+    api_endpoint: https://nvidia.wd5.myworkdayjobs.com/wday/cxs/nvidia/NVIDIAExternalCareerSite/jobs
     location_filters:
       - United States
       - San Jose
@@ -261,6 +359,20 @@ companies:
       - Mountain View
       - Palo Alto
 
+  - name: Salesforce
+    slug: salesforce
+    enabled: true
+    source_type: workday
+    ats_identifier: salesforce
+    careers_url: https://salesforce.wd12.myworkdayjobs.com/External_Career_Site
+    api_endpoint: https://salesforce.wd12.myworkdayjobs.com/wday/cxs/salesforce/External_Career_Site/jobs
+    location_filters:
+      - United States
+      - San Jose
+      - Sunnyvale
+      - Mountain View
+      - Palo Alto
+
   - name: Samsung Research America
     slug: samsung-research-america
     enabled: true
@@ -268,6 +380,20 @@ companies:
     ats_identifier: samsungresearchamerica
     careers_url: https://job-boards.greenhouse.io/samsungresearchamerica
     api_endpoint: https://boards-api.greenhouse.io/v1/boards/samsungresearchamerica/jobs?content=true
+    location_filters:
+      - United States
+      - San Jose
+      - Sunnyvale
+      - Mountain View
+      - Palo Alto
+
+  - name: Snap
+    slug: snap
+    enabled: true
+    source_type: workday
+    ats_identifier: snapchat
+    careers_url: https://wd1.myworkdaysite.com/en-US/recruiting/snapchat/snap
+    api_endpoint: https://wd1.myworkdaysite.com/wday/cxs/snapchat/snap/jobs
     location_filters:
       - United States
       - San Jose
@@ -296,6 +422,20 @@ companies:
     ats_identifier: waymo
     careers_url: https://job-boards.greenhouse.io/waymo
     api_endpoint: https://boards-api.greenhouse.io/v1/boards/waymo/jobs?content=true
+    location_filters:
+      - United States
+      - San Jose
+      - Sunnyvale
+      - Mountain View
+      - Palo Alto
+
+  - name: Zoom
+    slug: zoom
+    enabled: true
+    source_type: workday
+    ats_identifier: zoom
+    careers_url: https://zoom.wd5.myworkdayjobs.com/Zoom
+    api_endpoint: https://zoom.wd5.myworkdayjobs.com/wday/cxs/zoom/Zoom/jobs
     location_filters:
       - United States
       - San Jose

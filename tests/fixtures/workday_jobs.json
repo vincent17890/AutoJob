@@ -1,0 +1,27 @@
+{
+  "total": 2,
+  "jobPostings": [
+    {
+      "title": "Machine Learning Engineer, Inference",
+      "externalPath": "/job/US-CA-Santa-Clara/Machine-Learning-Engineer_JR123",
+      "locationsText": "US, CA, Santa Clara",
+      "postedOn": "2026-07-18",
+      "bulletFields": ["JR123"],
+      "jobFamily": "Engineering",
+      "jobDescription": "Build inference infrastructure for large language models.",
+      "jobPostingInfo": {
+        "jobDescriptionFields": [
+          {"label": "Time Type", "text": "Full time"}
+        ]
+      }
+    },
+    {
+      "title": "Sales Manager",
+      "externalPath": "/job/US-TX-Austin/Sales-Manager_JR124",
+      "locationsText": "US, TX, Austin",
+      "postedOn": "2026-07-17",
+      "bulletFields": ["JR124"],
+      "jobDescription": "Manage enterprise sales."
+    }
+  ]
+}

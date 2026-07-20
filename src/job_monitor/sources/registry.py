@@ -6,6 +6,7 @@ from job_monitor.sources.ashby import AshbySource
 from job_monitor.sources.base import JobSource, UnsupportedSource
 from job_monitor.sources.greenhouse import GreenhouseSource
 from job_monitor.sources.lever import LeverSource
+from job_monitor.sources.workday import WorkdaySource
 
 
 def build_source_registry(http_client: HttpClient | None = None) -> dict[SourceType, JobSource]:
@@ -13,10 +14,7 @@ def build_source_registry(http_client: HttpClient | None = None) -> dict[SourceT
         SourceType.GREENHOUSE: GreenhouseSource(http_client),
         SourceType.LEVER: LeverSource(http_client),
         SourceType.ASHBY: AshbySource(http_client),
-        SourceType.WORKDAY: UnsupportedSource(
-            "workday",
-            "Workday public career sites vary by tenant and often require tenant-specific parsing.",
-        ),
+        SourceType.WORKDAY: WorkdaySource(),
         SourceType.SMARTRECRUITERS: UnsupportedSource(
             "smartrecruiters",
             "SmartRecruiters support is intentionally not claimed until a tested parser is added.",

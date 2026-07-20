@@ -6,6 +6,7 @@ from job_monitor.config import CompanyConfig, SourceType
 from job_monitor.sources.ashby import AshbySource
 from job_monitor.sources.greenhouse import GreenhouseSource
 from job_monitor.sources.lever import LeverSource
+from job_monitor.sources.workday import WorkdaySource
 
 
 class FakeHttpClient:
@@ -15,6 +16,32 @@ class FakeHttpClient:
 
     def get_json(self, url: str) -> Any:
         self.urls.append(url)
+        return self.payload
+
+
+class FakeWorkdayClient:
+    def __init__(self, payload: Any) -> None:
+        self.payload = payload
+        self.posts: list[tuple[str, dict[str, Any]]] = []
+
+    def post(
+        self,
+        url: str,
+        json: dict[str, Any],
+        headers: dict[str, str] | None = None,
+    ) -> Any:
+        self.posts.append((url, json))
+        return FakeResponse(self.payload)
+
+
+class FakeResponse:
+    def __init__(self, payload: Any) -> None:
+        self.payload = payload
+
+    def raise_for_status(self) -> None:
+        return None
+
+    def json(self) -> Any:
         return self.payload
 
 
@@ -49,6 +76,30 @@ def test_parse_ashby_response(fixture_json: Any) -> None:
     assert jobs[0].title == "AI Research Engineer"
     assert jobs[0].location == "San Francisco, California, United States"
     assert jobs[0].department == "Research"
+
+
+def test_parse_workday_response(fixture_json: Any) -> None:
+    source = WorkdaySource(
+        FakeWorkdayClient(fixture_json("workday_jobs.json")),  # type: ignore[arg-type]
+        page_size=100,
+    )
+    company = CompanyConfig(
+        name="Example",
+        source_type=SourceType.WORKDAY,
+        ats_identifier="example",
+        api_endpoint="https://example.wd1.myworkdayjobs.com/wday/cxs/example/External/jobs",
+    )
+    jobs = source.fetch_jobs(company)
+    assert len(jobs) == 2
+    assert jobs[0].title == "Machine Learning Engineer, Inference"
+    assert jobs[0].location == "US, CA, Santa Clara"
+    assert jobs[0].employment_type == "Full time"
+    assert jobs[0].department == "Engineering"
+    assert jobs[0].source_job_id == "JR123"
+    assert (
+        jobs[0].posting_url
+        == "https://example.wd1.myworkdayjobs.com/job/US-CA-Santa-Clara/Machine-Learning-Engineer_JR123"
+    )
 
 
 def test_missing_fields_are_handled() -> None:
