@@ -1,12 +1,13 @@
 from __future__ import annotations
 
+from datetime import date
 from typing import Any
 
 from job_monitor.config import CompanyConfig, SourceType
 from job_monitor.sources.ashby import AshbySource
 from job_monitor.sources.greenhouse import GreenhouseSource
 from job_monitor.sources.lever import LeverSource
-from job_monitor.sources.workday import WorkdaySource
+from job_monitor.sources.workday import WorkdaySource, _parse_workday_date_text
 
 
 class FakeHttpClient:
@@ -100,6 +101,17 @@ def test_parse_workday_response(fixture_json: Any) -> None:
         jobs[0].posting_url
         == "https://example.wd1.myworkdayjobs.com/job/US-CA-Santa-Clara/Machine-Learning-Engineer_JR123"
     )
+
+
+def test_parse_workday_relative_posted_dates() -> None:
+    today = date(2026, 7, 20)
+    assert _parse_workday_date_text("Posted Today", today=today) == today
+    assert _parse_workday_date_text("Posted Yesterday", today=today) == date(2026, 7, 19)
+    assert _parse_workday_date_text("Posted 10 Days Ago", today=today) == date(2026, 7, 10)
+    assert _parse_workday_date_text("Posted 1 Day Ago", today=today) == date(2026, 7, 19)
+    assert _parse_workday_date_text("Posted 30+ Days Ago", today=today) == date(2026, 6, 20)
+    assert _parse_workday_date_text("2026-07-18", today=today) == date(2026, 7, 18)
+    assert _parse_workday_date_text("not a date", today=today) is None
 
 
 def test_missing_fields_are_handled() -> None:

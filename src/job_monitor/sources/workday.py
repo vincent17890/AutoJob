@@ -1,6 +1,7 @@
 from __future__ import annotations
 
-from datetime import date
+import re
+from datetime import date, timedelta
 from typing import Any
 from urllib.parse import urlsplit
 
@@ -138,9 +139,26 @@ def _parse_posted_date(raw: dict[str, Any]) -> date | None:
     value = raw.get("postedOn") or raw.get("startDate")
     if not value:
         return None
-    text = str(value)
-    if text.lower().startswith("posted"):
+    return _parse_workday_date_text(str(value), today=date.today())
+
+
+def _parse_workday_date_text(text: str, *, today: date) -> date | None:
+    normalized = " ".join(text.strip().casefold().split())
+    if not normalized:
         return None
+
+    if normalized in {"posted today", "today", "just posted"}:
+        return today
+    if normalized in {"posted yesterday", "yesterday"}:
+        return today - timedelta(days=1)
+
+    days_ago_match = re.fullmatch(r"posted (\d+)\+? days? ago", normalized)
+    if days_ago_match:
+        return today - timedelta(days=int(days_ago_match.group(1)))
+
+    if normalized in {"posted 30+ days ago", "posted more than 30 days ago"}:
+        return today - timedelta(days=30)
+
     try:
         return date.fromisoformat(text[:10])
     except ValueError:
