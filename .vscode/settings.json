@@ -1,0 +1,8 @@
+{
+    "python.pythonPath": "/Users/vincent/.pyenv/versions/3.7.0/bin/python",
+    "files.associations": {
+        "stdexcept": "cpp",
+        "iostream": "cpp"
+    },
+    "terminal.integrated.fontSize": 16,
+}

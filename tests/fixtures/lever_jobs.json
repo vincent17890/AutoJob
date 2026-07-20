@@ -1,0 +1,16 @@
+[
+  {
+    "id": "lever-1",
+    "text": "Applied Scientist - Recommendations",
+    "hostedUrl": "https://jobs.lever.co/example/lever-1?utm_source=x",
+    "applyUrl": "https://jobs.lever.co/example/lever-1/apply",
+    "createdAt": 1784383200000,
+    "categories": {
+      "team": "Science",
+      "location": "New York, NY",
+      "commitment": "Full-time"
+    },
+    "descriptionPlain": "Work on recommendation systems and experimentation.",
+    "lists": []
+  }
+]

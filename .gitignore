@@ -1,0 +1,16 @@
+.DS_Store
+.env
+.venv/
+venv/
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.ruff_cache/
+dist/
+build/
+*.egg-info/
+coverage.xml
+.coverage
+htmlcov/
+service-account.json
+google-credentials.json

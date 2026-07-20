@@ -1,0 +1,49 @@
+name: Job Monitor
+
+on:
+  workflow_dispatch:
+  schedule:
+    # GitHub Actions cron timing is approximate and may be delayed under load.
+    - cron: "0 */12 * * *"
+
+concurrency:
+  group: job-monitor
+  cancel-in-progress: false
+
+jobs:
+  monitor:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+
+    env:
+      JOB_MONITOR_CONFIG: config/companies.example.yml
+      GOOGLE_SHEET_ID: ${{ secrets.GOOGLE_SHEET_ID }}
+      GOOGLE_SERVICE_ACCOUNT_JSON: ${{ secrets.GOOGLE_SERVICE_ACCOUNT_JSON }}
+
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Install package
+        run: |
+          python -m pip install --upgrade pip
+          python -m pip install -e ".[dev]"
+
+      - name: Validate config
+        run: python -m job_monitor --config "$JOB_MONITOR_CONFIG" validate-config
+
+      - name: Run lint
+        run: |
+          ruff check .
+          ruff format --check .
+
+      - name: Run tests
+        run: pytest
+
+      - name: Run monitor
+        run: python -m job_monitor --config "$JOB_MONITOR_CONFIG" run

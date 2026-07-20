@@ -1,0 +1,21 @@
+{
+  "jobs": [
+    {
+      "id": 101,
+      "title": "Machine Learning Engineer, Evaluation",
+      "absolute_url": "https://boards.greenhouse.io/example/jobs/101?gh_src=test",
+      "location": {"name": "Remote, United States"},
+      "departments": [{"name": "AI"}],
+      "content": "Build model evaluation systems for LLM agents.",
+      "updated_at": "2026-07-18T10:00:00-04:00"
+    },
+    {
+      "id": 102,
+      "title": "Sales Manager",
+      "absolute_url": "https://boards.greenhouse.io/example/jobs/102",
+      "location": {"name": "United States"},
+      "departments": [],
+      "content": "Sell enterprise software."
+    }
+  ]
+}
