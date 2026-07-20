@@ -1,0 +1,89 @@
+filters:
+  title_keywords:
+    - Data Scientist
+    - Applied Scientist
+    - Research Scientist
+    - Machine Learning
+    - ML Engineer
+    - AI Engineer
+    - AI Research
+    - Software Engineer
+    - LLM
+    - Generative AI
+    - Agent
+    - Retrieval
+    - Ranking
+    - Recommendation
+    - Experimentation
+    - Causal Inference
+    - Forecasting
+  description_keywords:
+    - machine learning
+    - artificial intelligence
+    - generative AI
+    - large language models
+    - LLM
+    - agents
+    - model evaluation
+    - retrieval
+    - recommendation systems
+    - experimentation
+    - causal inference
+    - forecasting
+    - ML infrastructure
+  exclude_keywords:
+    - internship
+    - intern
+    - sales
+    - recruiting
+    - recruiter
+    - nursing
+    - warehouse
+    - technician
+    - customer support
+    - marketing
+  locations:
+    - United States
+    - San Jose
+    - Sunnyvale
+    - Mountain View
+    - Palo Alto
+  remote_allowed: false
+  employment_types:
+    - full-time
+    - full time
+  seniority_exclude:
+    - director
+    - vp
+    - vice president
+    - executive
+  allow_internships: false
+
+companies:
+  - name: Ashby
+    slug: ashby
+    enabled: true
+    source_type: ashby
+    ats_identifier: ashby
+    careers_url: https://jobs.ashbyhq.com/ashby
+    api_endpoint: https://api.ashbyhq.com/posting-api/job-board/ashby
+    location_filters:
+      - United States
+      - San Jose
+      - Sunnyvale
+      - Mountain View
+      - Palo Alto
+
+  - name: Greenhouse
+    slug: greenhouse
+    enabled: true
+    source_type: greenhouse
+    ats_identifier: greenhouse
+    careers_url: https://www.greenhouse.com/careers/opportunities
+    api_endpoint: https://boards-api.greenhouse.io/v1/boards/greenhouse/jobs?content=true
+    location_filters:
+      - United States
+      - San Jose
+      - Sunnyvale
+      - Mountain View
+      - Palo Alto

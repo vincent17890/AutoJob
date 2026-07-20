@@ -46,18 +46,12 @@ python -m pip install -e ".[dev]"
 Validate the example config:
 
 ```bash
-python -m job_monitor --config config/companies.example.yml validate-config
+python -m job_monitor --config config/companies.yml validate-config
 ```
 
 ## Configure companies
 
-Copy the example file:
-
-```bash
-cp config/companies.example.yml config/companies.yml
-```
-
-Edit `config/companies.yml`. Enable companies only after replacing placeholder ATS identifiers with verified values.
+Edit `config/companies.yml` to add, remove, enable, or disable companies.
 
 Example Greenhouse entry:
 
@@ -129,10 +123,10 @@ The workflow runs every 12 hours and supports manual `workflow_dispatch`. GitHub
 By default the workflow uses:
 
 ```yaml
-JOB_MONITOR_CONFIG: config/companies.example.yml
+JOB_MONITOR_CONFIG: config/companies.yml
 ```
 
-For production, either replace that with `config/companies.yml` and commit a non-secret config file, or rename the example file after editing. Company slugs and public careers URLs are not credentials.
+Company slugs and public careers URLs are not credentials. Do not put private API keys or secrets in this file.
 
 ## Filtering
 
@@ -226,5 +220,5 @@ ruff format .
 
 - Workday and SmartRecruiters are not implemented as reliable general adapters.
 - The MVP avoids browser automation, so JavaScript-only career pages need custom adapters or API discovery.
-- The example company config intentionally uses placeholders. Verify ATS identifiers before enabling companies.
+- Verify ATS identifiers before enabling additional companies.
 - Google Sheets is adequate for a personal monitor, but not for high-volume analytics.

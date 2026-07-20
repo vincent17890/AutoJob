@@ -13,7 +13,7 @@ def build_parser() -> argparse.ArgumentParser:
     parser = argparse.ArgumentParser(prog="job-monitor")
     parser.add_argument(
         "--config",
-        default=os.environ.get("JOB_MONITOR_CONFIG", "config/companies.example.yml"),
+        default=os.environ.get("JOB_MONITOR_CONFIG", "config/companies.yml"),
         help="Path to YAML company configuration.",
     )
     parser.add_argument("--log-level", default=os.environ.get("LOG_LEVEL", "INFO"))
