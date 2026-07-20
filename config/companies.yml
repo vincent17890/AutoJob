@@ -52,6 +52,7 @@ filters:
   employment_types:
     - full-time
     - full time
+    - FullTime
   seniority_exclude:
     - director
     - vp
@@ -60,13 +61,13 @@ filters:
   allow_internships: false
 
 companies:
-  - name: Ashby
-    slug: ashby
+  - name: Cash App
+    slug: cash-app
     enabled: true
-    source_type: ashby
-    ats_identifier: ashby
-    careers_url: https://jobs.ashbyhq.com/ashby
-    api_endpoint: https://api.ashbyhq.com/posting-api/job-board/ashby
+    source_type: greenhouse
+    ats_identifier: block
+    careers_url: https://job-boards.greenhouse.io/block
+    api_endpoint: https://boards-api.greenhouse.io/v1/boards/block/jobs?content=true
     location_filters:
       - United States
       - San Jose
@@ -74,13 +75,223 @@ companies:
       - Mountain View
       - Palo Alto
 
-  - name: Greenhouse
-    slug: greenhouse
+  - name: Cresta
+    slug: cresta
     enabled: true
     source_type: greenhouse
-    ats_identifier: greenhouse
-    careers_url: https://www.greenhouse.com/careers/opportunities
-    api_endpoint: https://boards-api.greenhouse.io/v1/boards/greenhouse/jobs?content=true
+    ats_identifier: cresta
+    careers_url: https://job-boards.greenhouse.io/cresta
+    api_endpoint: https://boards-api.greenhouse.io/v1/boards/cresta/jobs?content=true
+    location_filters:
+      - United States
+      - San Jose
+      - Sunnyvale
+      - Mountain View
+      - Palo Alto
+
+  - name: DatologyAI
+    slug: datologyai
+    enabled: true
+    source_type: ashby
+    ats_identifier: datologyai
+    careers_url: https://jobs.ashbyhq.com/datologyai
+    api_endpoint: https://api.ashbyhq.com/posting-api/job-board/datologyai
+    location_filters:
+      - United States
+      - San Jose
+      - Sunnyvale
+      - Mountain View
+      - Palo Alto
+
+  - name: Figma
+    slug: figma
+    enabled: true
+    source_type: greenhouse
+    ats_identifier: figma
+    careers_url: https://job-boards.greenhouse.io/figma
+    api_endpoint: https://boards-api.greenhouse.io/v1/boards/figma/jobs?content=true
+    location_filters:
+      - United States
+      - San Jose
+      - Sunnyvale
+      - Mountain View
+      - Palo Alto
+
+  - name: Glean
+    slug: glean
+    enabled: true
+    source_type: greenhouse
+    ats_identifier: gleanwork
+    careers_url: https://job-boards.greenhouse.io/gleanwork
+    api_endpoint: https://boards-api.greenhouse.io/v1/boards/gleanwork/jobs?content=true
+    location_filters:
+      - United States
+      - San Jose
+      - Sunnyvale
+      - Mountain View
+      - Palo Alto
+
+  - name: Google DeepMind
+    slug: google-deepmind
+    enabled: true
+    source_type: greenhouse
+    ats_identifier: deepmind
+    careers_url: https://job-boards.greenhouse.io/deepmind
+    api_endpoint: https://boards-api.greenhouse.io/v1/boards/deepmind/jobs?content=true
+    location_filters:
+      - United States
+      - San Jose
+      - Sunnyvale
+      - Mountain View
+      - Palo Alto
+
+  - name: Harvey
+    slug: harvey
+    enabled: true
+    source_type: ashby
+    ats_identifier: harvey
+    careers_url: https://jobs.ashbyhq.com/harvey
+    api_endpoint: https://api.ashbyhq.com/posting-api/job-board/harvey
+    location_filters:
+      - United States
+      - San Jose
+      - Sunnyvale
+      - Mountain View
+      - Palo Alto
+
+  - name: Instacart
+    slug: instacart
+    enabled: true
+    source_type: greenhouse
+    ats_identifier: instacart
+    careers_url: https://job-boards.greenhouse.io/instacart
+    api_endpoint: https://boards-api.greenhouse.io/v1/boards/instacart/jobs?content=true
+    location_filters:
+      - United States
+      - San Jose
+      - Sunnyvale
+      - Mountain View
+      - Palo Alto
+
+  - name: Notion
+    slug: notion
+    enabled: true
+    source_type: ashby
+    ats_identifier: notion
+    careers_url: https://jobs.ashbyhq.com/notion
+    api_endpoint: https://api.ashbyhq.com/posting-api/job-board/notion
+    location_filters:
+      - United States
+      - San Jose
+      - Sunnyvale
+      - Mountain View
+      - Palo Alto
+
+  - name: Otter.ai
+    slug: otter-ai
+    enabled: true
+    source_type: greenhouse
+    ats_identifier: otterai
+    careers_url: https://job-boards.greenhouse.io/otterai
+    api_endpoint: https://boards-api.greenhouse.io/v1/boards/otterai/jobs?content=true
+    location_filters:
+      - United States
+      - San Jose
+      - Sunnyvale
+      - Mountain View
+      - Palo Alto
+
+  - name: Pinterest
+    slug: pinterest
+    enabled: true
+    source_type: greenhouse
+    ats_identifier: pinterest
+    careers_url: https://job-boards.greenhouse.io/pinterest
+    api_endpoint: https://boards-api.greenhouse.io/v1/boards/pinterest/jobs?content=true
+    location_filters:
+      - United States
+      - San Jose
+      - Sunnyvale
+      - Mountain View
+      - Palo Alto
+
+  - name: PlayStation
+    slug: playstation
+    enabled: true
+    source_type: greenhouse
+    ats_identifier: sonyinteractiveentertainmentglobal
+    careers_url: https://job-boards.greenhouse.io/sonyinteractiveentertainmentglobal
+    api_endpoint: https://boards-api.greenhouse.io/v1/boards/sonyinteractiveentertainmentglobal/jobs?content=true
+    location_filters:
+      - United States
+      - San Jose
+      - Sunnyvale
+      - Mountain View
+      - Palo Alto
+
+  - name: Reddit
+    slug: reddit
+    enabled: true
+    source_type: greenhouse
+    ats_identifier: reddit
+    careers_url: https://job-boards.greenhouse.io/reddit
+    api_endpoint: https://boards-api.greenhouse.io/v1/boards/reddit/jobs?content=true
+    location_filters:
+      - United States
+      - San Jose
+      - Sunnyvale
+      - Mountain View
+      - Palo Alto
+
+  - name: Roblox
+    slug: roblox
+    enabled: true
+    source_type: greenhouse
+    ats_identifier: roblox
+    careers_url: https://job-boards.greenhouse.io/roblox
+    api_endpoint: https://boards-api.greenhouse.io/v1/boards/roblox/jobs?content=true
+    location_filters:
+      - United States
+      - San Jose
+      - Sunnyvale
+      - Mountain View
+      - Palo Alto
+
+  - name: Samsung Research America
+    slug: samsung-research-america
+    enabled: true
+    source_type: greenhouse
+    ats_identifier: samsungresearchamerica
+    careers_url: https://job-boards.greenhouse.io/samsungresearchamerica
+    api_endpoint: https://boards-api.greenhouse.io/v1/boards/samsungresearchamerica/jobs?content=true
+    location_filters:
+      - United States
+      - San Jose
+      - Sunnyvale
+      - Mountain View
+      - Palo Alto
+
+  - name: Tinder
+    slug: tinder
+    enabled: true
+    source_type: ashby
+    ats_identifier: tinder
+    careers_url: https://jobs.ashbyhq.com/tinder
+    api_endpoint: https://api.ashbyhq.com/posting-api/job-board/tinder
+    location_filters:
+      - United States
+      - San Jose
+      - Sunnyvale
+      - Mountain View
+      - Palo Alto
+
+  - name: Waymo
+    slug: waymo
+    enabled: true
+    source_type: greenhouse
+    ats_identifier: waymo
+    careers_url: https://job-boards.greenhouse.io/waymo
+    api_endpoint: https://boards-api.greenhouse.io/v1/boards/waymo/jobs?content=true
     location_filters:
       - United States
       - San Jose
