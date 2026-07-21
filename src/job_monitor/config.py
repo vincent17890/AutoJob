@@ -15,6 +15,7 @@ class SourceType(StrEnum):
     WORKDAY = "workday"
     SMARTRECRUITERS = "smartrecruiters"
     EIGHTFOLD = "eightfold"
+    ICIMS = "icims"
     CUSTOM = "custom"
 
 
@@ -154,6 +155,7 @@ class CompanyConfig(BaseModel):
                 SourceType.WORKDAY,
                 SourceType.SMARTRECRUITERS,
                 SourceType.EIGHTFOLD,
+                SourceType.ICIMS,
             }
             and not self.api_endpoint
             and not self.ats_identifier

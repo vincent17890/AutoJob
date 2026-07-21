@@ -29,6 +29,14 @@ class HttpClient:
         self._sleeper = sleeper
 
     def get_json(self, url: str) -> Any:
+        response = self._get(url)
+        return response.json()
+
+    def get_text(self, url: str) -> str:
+        response = self._get(url)
+        return response.text
+
+    def _get(self, url: str) -> httpx.Response:
         last_error: Exception | None = None
         for attempt in range(1, self._max_attempts + 1):
             try:
@@ -36,7 +44,7 @@ class HttpClient:
                 if response.status_code in TRANSIENT_STATUS_CODES:
                     response.raise_for_status()
                 response.raise_for_status()
-                return response.json()
+                return response
             except (httpx.TimeoutException, httpx.TransportError, httpx.HTTPStatusError) as exc:
                 last_error = exc
                 if attempt >= self._max_attempts:

@@ -6,6 +6,7 @@ from job_monitor.sources.ashby import AshbySource
 from job_monitor.sources.base import JobSource, UnsupportedSource
 from job_monitor.sources.eightfold import EightfoldSource
 from job_monitor.sources.greenhouse import GreenhouseSource
+from job_monitor.sources.icims import ICIMSSource
 from job_monitor.sources.lever import LeverSource
 from job_monitor.sources.smartrecruiters import SmartRecruitersSource
 from job_monitor.sources.workday import WorkdaySource
@@ -19,6 +20,7 @@ def build_source_registry(http_client: HttpClient | None = None) -> dict[SourceT
         SourceType.WORKDAY: WorkdaySource(),
         SourceType.SMARTRECRUITERS: SmartRecruitersSource(http_client),
         SourceType.EIGHTFOLD: EightfoldSource(http_client),
+        SourceType.ICIMS: ICIMSSource(http_client),
         SourceType.CUSTOM: UnsupportedSource(
             "custom",
             "Custom adapters should be implemented explicitly for each nonstandard source.",

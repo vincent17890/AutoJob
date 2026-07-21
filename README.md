@@ -28,6 +28,7 @@ Implemented and tested:
 - Workday CXS job API for verified tenant/site endpoints
 - SmartRecruiters public Posting API
 - Eightfold public careers search endpoint
+- iCIMS public career-portal HTML with JobPosting JSON-LD detail pages
 
 Explicitly unsupported in this MVP:
 
@@ -39,6 +40,9 @@ SmartRecruiters support requires the company identifier used in
 `https://careers.smartrecruiters.com/{companyIdentifier}`.
 Eightfold support uses the public `app.eightfold.ai` careers search endpoint and requires
 the Eightfold `domain`, for example `eightfold.ai`.
+iCIMS support uses anonymous public career portals such as
+`https://careers-example.icims.com/jobs/search?in_iframe=1`; it does not use the authenticated
+iCIMS customer API.
 
 ## Setup
 
@@ -100,6 +104,18 @@ companies:
     source_type: eightfold
     ats_identifier: verified-domain.example
     careers_url: https://app.eightfold.ai/careers?domain=verified-domain.example
+```
+
+Example iCIMS entry:
+
+```yaml
+companies:
+  - name: Example Company
+    slug: example-company
+    enabled: true
+    source_type: icims
+    ats_identifier: careers-example
+    careers_url: https://careers-example.icims.com
 ```
 
 ## Local execution
@@ -253,6 +269,8 @@ ruff format .
 - Workday support is limited to verified CXS endpoints and caps pagination to avoid very large runs.
 - SmartRecruiters support is limited to public Posting API companies with verified identifiers.
 - Eightfold support is limited to public `app.eightfold.ai` careers pages with verified domains.
+- iCIMS support is limited to public career portals that expose server-rendered `/jobs/search`
+  pages and JobPosting JSON-LD on detail pages.
 - The MVP avoids browser automation, so JavaScript-only career pages need custom adapters or API discovery.
 - Verify ATS identifiers before enabling additional companies.
 - Google Sheets is adequate for a personal monitor, but not for high-volume analytics.

@@ -7,6 +7,7 @@ from job_monitor.config import CompanyConfig, SourceType
 from job_monitor.sources.ashby import AshbySource
 from job_monitor.sources.eightfold import EightfoldSource
 from job_monitor.sources.greenhouse import GreenhouseSource
+from job_monitor.sources.icims import ICIMSSource
 from job_monitor.sources.lever import LeverSource
 from job_monitor.sources.smartrecruiters import SmartRecruitersSource
 from job_monitor.sources.workday import WorkdaySource, _parse_workday_date_text, _posting_url
@@ -30,6 +31,16 @@ class FakeSequenceHttpClient:
     def get_json(self, url: str) -> Any:
         self.urls.append(url)
         return self.payloads.pop(0)
+
+
+class FakeTextHttpClient:
+    def __init__(self, pages: list[str]) -> None:
+        self.pages = pages
+        self.urls: list[str] = []
+
+    def get_text(self, url: str) -> str:
+        self.urls.append(url)
+        return self.pages.pop(0)
 
 
 class FakeWorkdayClient:
@@ -142,6 +153,35 @@ def test_parse_eightfold_response(fixture_json: Any) -> None:
     )
     assert jobs[0].date_posted == date(2026, 5, 4)
     assert "AI agents" in (jobs[0].description or "")
+
+
+def test_parse_icims_response(fixture_text: Any) -> None:
+    source = ICIMSSource(
+        FakeTextHttpClient(  # type: ignore[arg-type]
+            [
+                fixture_text("icims_search.html"),
+                fixture_text("icims_detail.html"),
+                fixture_text("icims_detail.html"),
+            ]
+        )
+    )
+    company = CompanyConfig(
+        name="Example",
+        source_type=SourceType.ICIMS,
+        ats_identifier="careers-example",
+    )
+    jobs = source.fetch_jobs(company)
+    assert len(jobs) == 2
+    assert jobs[0].title == "Machine Learning Engineer"
+    assert jobs[0].location == "Santa Clara, CA, US"
+    assert jobs[0].employment_type == "Full-Time"
+    assert jobs[0].source_job_id == "1234"
+    assert jobs[0].date_posted == date(2026, 7, 18)
+    assert jobs[0].posting_url == (
+        "https://careers-example.icims.com/jobs/1234/machine-learning-engineer/job"
+    )
+    assert "LLM retrieval" in (jobs[0].description or "")
+    assert "in_iframe=1" in source.endpoint_for(company)
 
 
 def test_smartrecruiters_uses_configured_country_filter(fixture_json: Any) -> None:
