@@ -43,6 +43,7 @@ class SmartRecruitersSource:
                     "limit": self._page_size,
                     "offset": offset,
                     "destination": "PUBLIC",
+                    **_configured_query_params(company),
                 },
             )
             data = self._http.get_json(url)
@@ -61,7 +62,8 @@ class SmartRecruitersSource:
         return [self._parse_job(company, raw) for raw in raw_postings]
 
     def _parse_job(self, company: CompanyConfig, raw: dict[str, Any]) -> JobPosting:
-        details = self._details_for(company, raw) if self._fetch_details else raw
+        fetch_details = bool(company.extra.get("fetch_details", self._fetch_details))
+        details = self._details_for(company, raw) if fetch_details else raw
         merged = {**raw, **details}
         source_job_id = str(merged.get("uuid") or merged.get("id") or "").strip()
         posting_url = (
@@ -96,8 +98,32 @@ class SmartRecruitersSource:
 
 
 def _with_query(url: str, params: dict[str, Any]) -> str:
+    params = {key: value for key, value in params.items() if value is not None}
     separator = "&" if "?" in url else "?"
     return f"{url}{separator}{urlencode(params)}"
+
+
+def _configured_query_params(company: CompanyConfig) -> dict[str, str]:
+    params = {}
+    country = company.extra.get("country")
+    region = company.extra.get("region")
+    city = company.extra.get("city")
+
+    if not country and _has_us_location_filter(company):
+        country = "us"
+
+    if country:
+        params["country"] = str(country)
+    if region:
+        params["region"] = str(region)
+    if city:
+        params["city"] = str(city)
+    return params
+
+
+def _has_us_location_filter(company: CompanyConfig) -> bool:
+    normalized_filters = {item.strip().casefold() for item in company.location_filters}
+    return bool(normalized_filters & {"united states", "us", "usa"})
 
 
 def _detail_url(base_endpoint: str, raw: dict[str, Any]) -> str | None:

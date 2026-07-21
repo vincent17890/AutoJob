@@ -115,6 +115,19 @@ def test_parse_smartrecruiters_response(fixture_json: Any) -> None:
     assert "recommendation systems" in (jobs[0].description or "")
 
 
+def test_smartrecruiters_uses_configured_country_filter(fixture_json: Any) -> None:
+    client = FakeSequenceHttpClient([fixture_json("smartrecruiters_postings.json")])
+    source = SmartRecruitersSource(client, fetch_details=False)  # type: ignore[arg-type]
+    company = CompanyConfig(
+        name="Example",
+        source_type=SourceType.SMARTRECRUITERS,
+        ats_identifier="example",
+        location_filters=["United States"],
+    )
+    source.fetch_jobs(company)
+    assert "country=us" in client.urls[0]
+
+
 def test_parse_workday_response(fixture_json: Any) -> None:
     source = WorkdaySource(
         FakeWorkdayClient(fixture_json("workday_jobs.json")),  # type: ignore[arg-type]

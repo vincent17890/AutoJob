@@ -79,6 +79,22 @@ companies:
       - Mountain View
       - Palo Alto
 
+  - name: Bosch
+    slug: bosch
+    enabled: true
+    source_type: smartrecruiters
+    ats_identifier: BoschGroup
+    careers_url: https://careers.smartrecruiters.com/BoschGroup
+    extra:
+      country: us
+      fetch_details: false
+    location_filters:
+      - United States
+      - San Jose
+      - Sunnyvale
+      - Mountain View
+      - Palo Alto
+
   - name: Cash App
     slug: cash-app
     enabled: true
@@ -114,6 +130,22 @@ companies:
     ats_identifier: datologyai
     careers_url: https://jobs.ashbyhq.com/datologyai
     api_endpoint: https://api.ashbyhq.com/posting-api/job-board/datologyai
+    location_filters:
+      - United States
+      - San Jose
+      - Sunnyvale
+      - Mountain View
+      - Palo Alto
+
+  - name: Experian
+    slug: experian
+    enabled: true
+    source_type: smartrecruiters
+    ats_identifier: Experian
+    careers_url: https://careers.smartrecruiters.com/Experian
+    extra:
+      country: us
+      fetch_details: false
     location_filters:
       - United States
       - San Jose
@@ -387,6 +419,22 @@ companies:
       - Mountain View
       - Palo Alto
 
+  - name: ServiceNow
+    slug: servicenow
+    enabled: true
+    source_type: smartrecruiters
+    ats_identifier: ServiceNow
+    careers_url: https://careers.smartrecruiters.com/ServiceNow
+    extra:
+      country: us
+      fetch_details: false
+    location_filters:
+      - United States
+      - San Jose
+      - Sunnyvale
+      - Mountain View
+      - Palo Alto
+
   - name: Snap
     slug: snap
     enabled: true
@@ -408,6 +456,22 @@ companies:
     ats_identifier: tinder
     careers_url: https://jobs.ashbyhq.com/tinder
     api_endpoint: https://api.ashbyhq.com/posting-api/job-board/tinder
+    location_filters:
+      - United States
+      - San Jose
+      - Sunnyvale
+      - Mountain View
+      - Palo Alto
+
+  - name: Visa
+    slug: visa
+    enabled: true
+    source_type: smartrecruiters
+    ats_identifier: Visa
+    careers_url: https://careers.smartrecruiters.com/Visa
+    extra:
+      country: us
+      fetch_details: false
     location_filters:
       - United States
       - San Jose
