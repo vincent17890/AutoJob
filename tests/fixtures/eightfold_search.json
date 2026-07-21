@@ -1,0 +1,36 @@
+{
+  "status": 200,
+  "error": {
+    "message": "",
+    "body": ""
+  },
+  "data": {
+    "count": 2,
+    "positions": [
+      {
+        "id": 68761290831,
+        "displayJobId": 68761290831,
+        "name": "Staff Machine Learning Engineer - Agentic Models, LLM, RAG, GenAI",
+        "locations": ["Santa Clara, CA, USA"],
+        "standardizedLocations": ["Santa Clara, CA, US"],
+        "postedTs": 1777920564,
+        "department": "Engineering",
+        "workLocationOption": "hybrid",
+        "atsJobId": 68761290831,
+        "positionUrl": "/careers/job/68761290831"
+      },
+      {
+        "id": 68758881875,
+        "displayJobId": 68758881875,
+        "name": "Account Executive",
+        "locations": ["London, England, United Kingdom"],
+        "standardizedLocations": ["London, England, GB"],
+        "postedTs": 1770329989,
+        "department": "Sales",
+        "workLocationOption": "remote",
+        "atsJobId": 68758881875,
+        "positionUrl": "/careers/job/68758881875"
+      }
+    ]
+  }
+}

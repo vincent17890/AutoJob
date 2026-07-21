@@ -27,6 +27,7 @@ Implemented and tested:
 - Ashby job board API
 - Workday CXS job API for verified tenant/site endpoints
 - SmartRecruiters public Posting API
+- Eightfold public careers search endpoint
 
 Explicitly unsupported in this MVP:
 
@@ -36,6 +37,8 @@ Workday support requires a verified `api_endpoint` ending in `/wday/cxs/{tenant}
 Workday tenants vary, so do not assume one company URL pattern applies to every company.
 SmartRecruiters support requires the company identifier used in
 `https://careers.smartrecruiters.com/{companyIdentifier}`.
+Eightfold support uses the public `app.eightfold.ai` careers search endpoint and requires
+the Eightfold `domain`, for example `eightfold.ai`.
 
 ## Setup
 
@@ -85,6 +88,18 @@ companies:
     source_type: smartrecruiters
     ats_identifier: verified-smartrecruiters-company-identifier
     careers_url: https://careers.smartrecruiters.com/verified-smartrecruiters-company-identifier
+```
+
+Example Eightfold entry:
+
+```yaml
+companies:
+  - name: Example Company
+    slug: example-company
+    enabled: true
+    source_type: eightfold
+    ats_identifier: verified-domain.example
+    careers_url: https://app.eightfold.ai/careers?domain=verified-domain.example
 ```
 
 ## Local execution
@@ -237,6 +252,7 @@ ruff format .
 
 - Workday support is limited to verified CXS endpoints and caps pagination to avoid very large runs.
 - SmartRecruiters support is limited to public Posting API companies with verified identifiers.
+- Eightfold support is limited to public `app.eightfold.ai` careers pages with verified domains.
 - The MVP avoids browser automation, so JavaScript-only career pages need custom adapters or API discovery.
 - Verify ATS identifiers before enabling additional companies.
 - Google Sheets is adequate for a personal monitor, but not for high-volume analytics.

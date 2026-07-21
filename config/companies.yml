@@ -153,6 +153,21 @@ companies:
       - Mountain View
       - Palo Alto
 
+  - name: Eightfold
+    slug: eightfold
+    enabled: true
+    source_type: eightfold
+    ats_identifier: eightfold.ai
+    careers_url: https://app.eightfold.ai/careers?domain=eightfold.ai
+    extra:
+      fetch_details: false
+    location_filters:
+      - United States
+      - San Jose
+      - Sunnyvale
+      - Mountain View
+      - Palo Alto
+
   - name: Figma
     slug: figma
     enabled: true

@@ -5,6 +5,7 @@ from typing import Any
 
 from job_monitor.config import CompanyConfig, SourceType
 from job_monitor.sources.ashby import AshbySource
+from job_monitor.sources.eightfold import EightfoldSource
 from job_monitor.sources.greenhouse import GreenhouseSource
 from job_monitor.sources.lever import LeverSource
 from job_monitor.sources.smartrecruiters import SmartRecruitersSource
@@ -113,6 +114,34 @@ def test_parse_smartrecruiters_response(fixture_json: Any) -> None:
         "743999999001-machine-learning-engineer-recommendations"
     )
     assert "recommendation systems" in (jobs[0].description or "")
+
+
+def test_parse_eightfold_response(fixture_json: Any) -> None:
+    source = EightfoldSource(
+        FakeSequenceHttpClient(  # type: ignore[arg-type]
+            [
+                fixture_json("eightfold_search.json"),
+                fixture_json("eightfold_detail.json"),
+                {"data": {"id": 68758881875, "name": "Account Executive"}},
+            ]
+        )
+    )
+    company = CompanyConfig(
+        name="Eightfold",
+        source_type=SourceType.EIGHTFOLD,
+        ats_identifier="eightfold.ai",
+    )
+    jobs = source.fetch_jobs(company)
+    assert len(jobs) == 2
+    assert jobs[0].title == "Staff Machine Learning Engineer - Agentic Models, LLM, RAG, GenAI"
+    assert jobs[0].location == "Santa Clara, CA, US"
+    assert jobs[0].department == "Engineering"
+    assert jobs[0].source_job_id == "68761290831"
+    assert jobs[0].posting_url == (
+        "https://app.eightfold.ai/careers/job/68761290831?domain=eightfold.ai"
+    )
+    assert jobs[0].date_posted == date(2026, 5, 4)
+    assert "AI agents" in (jobs[0].description or "")
 
 
 def test_smartrecruiters_uses_configured_country_filter(fixture_json: Any) -> None:

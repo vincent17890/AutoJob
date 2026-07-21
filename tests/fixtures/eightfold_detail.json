@@ -1,0 +1,20 @@
+{
+  "status": 200,
+  "error": {
+    "message": "",
+    "body": ""
+  },
+  "data": {
+    "id": 68761290831,
+    "displayJobId": 68761290831,
+    "name": "Staff Machine Learning Engineer - Agentic Models, LLM, RAG, GenAI",
+    "locations": ["Santa Clara, CA, USA"],
+    "standardizedLocations": ["Santa Clara, CA, US"],
+    "postedTs": 1777920564,
+    "department": "Engineering",
+    "workLocationOption": "hybrid",
+    "atsJobId": 68761290831,
+    "positionUrl": "/careers/job/68761290831",
+    "jobDescription": "<div>Build AI agents, LLM systems, RAG, and machine learning infrastructure.</div>"
+  }
+}
