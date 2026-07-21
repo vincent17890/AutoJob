@@ -81,6 +81,20 @@ companies:
       - Palo Alto
       - Santa Clara
 
+  - name: AMD
+    slug: amd
+    enabled: true
+    source_type: icims
+    ats_identifier: canadacareers-amd.icims.com
+    careers_url: https://canadacareers-amd.icims.com/jobs/search
+    location_filters:
+      - United States
+      - San Jose
+      - Sunnyvale
+      - Mountain View
+      - Palo Alto
+      - Santa Clara
+
   - name: Bosch
     slug: bosch
     enabled: true
@@ -547,6 +561,20 @@ companies:
     ats_identifier: zoom
     careers_url: https://zoom.wd5.myworkdayjobs.com/Zoom
     api_endpoint: https://zoom.wd5.myworkdayjobs.com/wday/cxs/zoom/Zoom/jobs
+    location_filters:
+      - United States
+      - San Jose
+      - Sunnyvale
+      - Mountain View
+      - Palo Alto
+      - Santa Clara
+
+  - name: ZS
+    slug: zs
+    enabled: true
+    source_type: icims
+    ats_identifier: plcareers-zs.icims.com
+    careers_url: https://plcareers-zs.icims.com/jobs/search
     location_filters:
       - United States
       - San Jose
