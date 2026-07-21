@@ -127,6 +127,60 @@ def test_parse_smartrecruiters_response(fixture_json: Any) -> None:
     assert "recommendation systems" in (jobs[0].description or "")
 
 
+def test_smartrecruiters_handles_string_ref_detail_url(fixture_json: Any) -> None:
+    postings = fixture_json("smartrecruiters_postings.json")
+    postings["content"][0]["ref"] = (
+        "https://api.smartrecruiters.com/v1/companies/example/postings/743999999001"
+    )
+    source = SmartRecruitersSource(
+        FakeSequenceHttpClient(  # type: ignore[arg-type]
+            [
+                postings,
+                fixture_json("smartrecruiters_detail.json"),
+                {"id": "743999999002", "name": "Sales Manager"},
+            ]
+        )
+    )
+
+    jobs = source.fetch_jobs(_company(SourceType.SMARTRECRUITERS))
+
+    assert jobs[0].description
+    assert "recommendation systems" in jobs[0].description
+
+
+def test_smartrecruiters_constructs_individual_url_when_only_career_page_exists() -> None:
+    source = SmartRecruitersSource(
+        FakeSequenceHttpClient(  # type: ignore[arg-type]
+            [
+                {
+                    "content": [
+                        {
+                            "id": "744000138739709",
+                            "uuid": "9719ed66-7e64-4113-867e-578ee0bcdd23",
+                            "name": "Electrical Engineer",
+                            "postingUrl": "https://careers.smartrecruiters.com/BoschGroup",
+                        }
+                    ],
+                    "totalFound": 1,
+                }
+            ]
+        ),
+        fetch_details=False,
+    )
+    company = CompanyConfig(
+        name="Bosch",
+        source_type=SourceType.SMARTRECRUITERS,
+        ats_identifier="BoschGroup",
+        careers_url="https://careers.smartrecruiters.com/BoschGroup",
+    )
+
+    jobs = source.fetch_jobs(company)
+
+    assert jobs[0].posting_url == (
+        "https://jobs.smartrecruiters.com/BoschGroup/744000138739709-electrical-engineer"
+    )
+
+
 def test_parse_eightfold_response(fixture_json: Any) -> None:
     source = EightfoldSource(
         FakeSequenceHttpClient(  # type: ignore[arg-type]

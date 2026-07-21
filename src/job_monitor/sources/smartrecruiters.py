@@ -3,7 +3,7 @@ from __future__ import annotations
 from datetime import date
 from html import unescape
 from typing import Any
-from urllib.parse import urlencode
+from urllib.parse import quote, urlencode, urlsplit
 
 from job_monitor.config import CompanyConfig
 from job_monitor.http import HttpClient
@@ -66,12 +66,7 @@ class SmartRecruitersSource:
         details = self._details_for(company, raw) if fetch_details else raw
         merged = {**raw, **details}
         source_job_id = str(merged.get("uuid") or merged.get("id") or "").strip()
-        posting_url = (
-            merged.get("jobAdUrl")
-            or merged.get("postingUrl")
-            or merged.get("url")
-            or _career_posting_url(company, merged)
-        )
+        posting_url = _posting_url(company, merged)
         application_url = merged.get("applyUrl") or posting_url
 
         return JobPosting(
@@ -128,6 +123,8 @@ def _has_us_location_filter(company: CompanyConfig) -> bool:
 
 def _detail_url(base_endpoint: str, raw: dict[str, Any]) -> str | None:
     ref = raw.get("ref")
+    if isinstance(ref, str) and ref:
+        return ref
     if isinstance(ref, dict) and ref.get("url"):
         return str(ref["url"])
     posting_id = raw.get("uuid") or raw.get("id")
@@ -136,15 +133,37 @@ def _detail_url(base_endpoint: str, raw: dict[str, Any]) -> str | None:
     return f"{base_endpoint.rstrip('/')}/{posting_id}"
 
 
-def _career_posting_url(company: CompanyConfig, raw: dict[str, Any]) -> str | None:
-    if not company.careers_url:
-        return None
+def _posting_url(company: CompanyConfig, raw: dict[str, Any]) -> str | None:
+    explicit_url = raw.get("jobAdUrl") or raw.get("postingUrl") or raw.get("url")
+    if _is_individual_posting_url(explicit_url):
+        return str(explicit_url)
+
     posting_id = raw.get("id") or raw.get("uuid")
     if not posting_id:
-        return None
+        return str(explicit_url) if explicit_url else None
+
+    company_identifier = company.ats_identifier or _company_identifier_from_url(company)
+    if not company_identifier:
+        return str(explicit_url) if explicit_url else None
+
     title_slug = str(raw.get("name") or raw.get("title") or "job").lower()
     title_slug = "-".join("".join(char if char.isalnum() else " " for char in title_slug).split())
-    return f"{str(company.careers_url).rstrip('/')}/{posting_id}-{title_slug}"
+    quoted_company = quote(str(company_identifier).strip("/"), safe="")
+    return f"https://jobs.smartrecruiters.com/{quoted_company}/{posting_id}-{title_slug}"
+
+
+def _is_individual_posting_url(value: Any) -> bool:
+    if not value:
+        return False
+    parsed = urlsplit(str(value))
+    path_parts = [part for part in parsed.path.split("/") if part]
+    return "smartrecruiters.com" in parsed.netloc.casefold() and len(path_parts) >= 2
+
+
+def _company_identifier_from_url(company: CompanyConfig) -> str | None:
+    if not company.careers_url:
+        return None
+    return str(company.careers_url).rstrip("/").split("/")[-1] or None
 
 
 def _label(value: Any) -> str | None:
