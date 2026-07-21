@@ -1,0 +1,28 @@
+{
+  "id": "743999999001",
+  "uuid": "11111111-2222-3333-4444-555555555555",
+  "name": "Machine Learning Engineer, Recommendations",
+  "releasedDate": "2026-07-18T12:30:00.000Z",
+  "location": {
+    "city": "San Jose",
+    "region": "CA",
+    "country": "us",
+    "remote": false
+  },
+  "department": {
+    "id": "engineering",
+    "label": "Engineering"
+  },
+  "typeOfEmployment": {
+    "id": "full_time",
+    "label": "Full-time"
+  },
+  "jobAdUrl": "https://jobs.smartrecruiters.com/Example/743999999001-machine-learning-engineer-recommendations",
+  "applyUrl": "https://jobs.smartrecruiters.com/Example/743999999001-machine-learning-engineer-recommendations?trid=test",
+  "jobAd": {
+    "companyDescription": "<p>Example builds AI products.</p>",
+    "jobDescription": "<p>Build recommendation systems and model evaluation pipelines.</p>",
+    "qualifications": "<p>Experience with machine learning infrastructure.</p>",
+    "additionalInformation": "<p>US-based role.</p>"
+  }
+}

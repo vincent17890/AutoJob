@@ -26,14 +26,16 @@ Implemented and tested:
 - Lever postings API
 - Ashby job board API
 - Workday CXS job API for verified tenant/site endpoints
+- SmartRecruiters public Posting API
 
 Explicitly unsupported in this MVP:
 
-- SmartRecruiters: adapter structure exists, but support is not claimed until tested.
 - Company-specific custom sites: add a dedicated adapter before enabling them.
 
 Workday support requires a verified `api_endpoint` ending in `/wday/cxs/{tenant}/{site}/jobs`.
 Workday tenants vary, so do not assume one company URL pattern applies to every company.
+SmartRecruiters support requires the company identifier used in
+`https://careers.smartrecruiters.com/{companyIdentifier}`.
 
 ## Setup
 
@@ -72,6 +74,18 @@ companies:
 ```
 
 You can also provide a full `api_endpoint` if a company uses a compatible endpoint but the slug is not enough.
+
+Example SmartRecruiters entry:
+
+```yaml
+companies:
+  - name: Example Company
+    slug: example-company
+    enabled: true
+    source_type: smartrecruiters
+    ats_identifier: verified-smartrecruiters-company-identifier
+    careers_url: https://careers.smartrecruiters.com/verified-smartrecruiters-company-identifier
+```
 
 ## Local execution
 
@@ -222,7 +236,7 @@ ruff format .
 ## Current limitations
 
 - Workday support is limited to verified CXS endpoints and caps pagination to avoid very large runs.
-- SmartRecruiters is not implemented as a reliable general adapter.
+- SmartRecruiters support is limited to public Posting API companies with verified identifiers.
 - The MVP avoids browser automation, so JavaScript-only career pages need custom adapters or API discovery.
 - Verify ATS identifiers before enabling additional companies.
 - Google Sheets is adequate for a personal monitor, but not for high-volume analytics.

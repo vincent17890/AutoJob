@@ -146,7 +146,13 @@ class CompanyConfig(BaseModel):
     def require_source_locator(self) -> CompanyConfig:
         supported_source_without_locator = (
             self.source_type
-            in {SourceType.GREENHOUSE, SourceType.LEVER, SourceType.ASHBY, SourceType.WORKDAY}
+            in {
+                SourceType.GREENHOUSE,
+                SourceType.LEVER,
+                SourceType.ASHBY,
+                SourceType.WORKDAY,
+                SourceType.SMARTRECRUITERS,
+            }
             and not self.api_endpoint
             and not self.ats_identifier
         )
