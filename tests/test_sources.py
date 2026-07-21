@@ -7,7 +7,7 @@ from job_monitor.config import CompanyConfig, SourceType
 from job_monitor.sources.ashby import AshbySource
 from job_monitor.sources.greenhouse import GreenhouseSource
 from job_monitor.sources.lever import LeverSource
-from job_monitor.sources.workday import WorkdaySource, _parse_workday_date_text
+from job_monitor.sources.workday import WorkdaySource, _parse_workday_date_text, _posting_url
 
 
 class FakeHttpClient:
@@ -88,6 +88,7 @@ def test_parse_workday_response(fixture_json: Any) -> None:
         name="Example",
         source_type=SourceType.WORKDAY,
         ats_identifier="example",
+        careers_url="https://example.wd1.myworkdayjobs.com/External",
         api_endpoint="https://example.wd1.myworkdayjobs.com/wday/cxs/example/External/jobs",
     )
     jobs = source.fetch_jobs(company)
@@ -99,7 +100,31 @@ def test_parse_workday_response(fixture_json: Any) -> None:
     assert jobs[0].source_job_id == "JR123"
     assert (
         jobs[0].posting_url
-        == "https://example.wd1.myworkdayjobs.com/job/US-CA-Santa-Clara/Machine-Learning-Engineer_JR123"
+        == "https://example.wd1.myworkdayjobs.com/External/job/US-CA-Santa-Clara/Machine-Learning-Engineer_JR123"
+    )
+
+
+def test_build_workday_posting_url_from_careers_url() -> None:
+    assert (
+        _posting_url(
+            "https://nvidia.wd5.myworkdayjobs.com/NVIDIAExternalCareerSite",
+            "/job/US-CA-Santa-Clara/Machine-Learning-Engineer_JR123",
+        )
+        == "https://nvidia.wd5.myworkdayjobs.com/NVIDIAExternalCareerSite/job/US-CA-Santa-Clara/Machine-Learning-Engineer_JR123"
+    )
+    assert (
+        _posting_url(
+            "https://wd1.myworkdaysite.com/en-US/recruiting/snapchat/snap",
+            "/job/Los-Angeles-California/Design-Engineer_R0046158-1",
+        )
+        == "https://wd1.myworkdaysite.com/en-US/recruiting/snapchat/snap/job/Los-Angeles-California/Design-Engineer_R0046158-1"
+    )
+    assert (
+        _posting_url(
+            "https://example.wd1.myworkdayjobs.com/External",
+            "https://example.com/job/123",
+        )
+        == "https://example.com/job/123"
     )
 
 

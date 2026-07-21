@@ -76,7 +76,10 @@ class WorkdaySource:
     ) -> JobPosting:
         source_job_id = str(raw.get("bulletFields", [""])[0] or raw.get("id") or "").strip()
         external_path = raw.get("externalPath") or raw.get("jobPostingInfo", {}).get("externalUrl")
-        posting_url = _posting_url(endpoint, str(external_path) if external_path else None)
+        posting_url = _posting_url(
+            str(company.careers_url) if company.careers_url else endpoint,
+            str(external_path) if external_path else None,
+        )
         locations = raw.get("locationsText") or raw.get("locationsDisplay") or raw.get("location")
 
         return JobPosting(
@@ -95,11 +98,12 @@ class WorkdaySource:
         )
 
 
-def _posting_url(endpoint: str, external_path: str | None) -> str | None:
+def _posting_url(careers_url: str, external_path: str | None) -> str | None:
     if not external_path:
         return None
-    host = endpoint.split("/wday/cxs/", 1)[0]
-    return f"{host}{external_path}"
+    if external_path.startswith(("http://", "https://")):
+        return external_path
+    return f"{careers_url.rstrip('/')}/{external_path.lstrip('/')}"
 
 
 def _headers_for(url: str) -> dict[str, str]:
