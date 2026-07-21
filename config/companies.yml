@@ -48,6 +48,7 @@ filters:
     - Sunnyvale
     - Mountain View
     - Palo Alto
+    - Santa Clara
   remote_allowed: true
   employment_types:
     - full-time
@@ -78,6 +79,7 @@ companies:
       - Sunnyvale
       - Mountain View
       - Palo Alto
+      - Santa Clara
 
   - name: Bosch
     slug: bosch
@@ -94,6 +96,7 @@ companies:
       - Sunnyvale
       - Mountain View
       - Palo Alto
+      - Santa Clara
 
   - name: Cash App
     slug: cash-app
@@ -108,6 +111,7 @@ companies:
       - Sunnyvale
       - Mountain View
       - Palo Alto
+      - Santa Clara
 
   - name: Cresta
     slug: cresta
@@ -122,6 +126,7 @@ companies:
       - Sunnyvale
       - Mountain View
       - Palo Alto
+      - Santa Clara
 
   - name: DatologyAI
     slug: datologyai
@@ -136,6 +141,7 @@ companies:
       - Sunnyvale
       - Mountain View
       - Palo Alto
+      - Santa Clara
 
   - name: Experian
     slug: experian
@@ -152,6 +158,7 @@ companies:
       - Sunnyvale
       - Mountain View
       - Palo Alto
+      - Santa Clara
 
   - name: Eightfold
     slug: eightfold
@@ -167,6 +174,7 @@ companies:
       - Sunnyvale
       - Mountain View
       - Palo Alto
+      - Santa Clara
 
   - name: Figma
     slug: figma
@@ -181,6 +189,7 @@ companies:
       - Sunnyvale
       - Mountain View
       - Palo Alto
+      - Santa Clara
 
   - name: Glean
     slug: glean
@@ -195,6 +204,7 @@ companies:
       - Sunnyvale
       - Mountain View
       - Palo Alto
+      - Santa Clara
 
   - name: Google DeepMind
     slug: google-deepmind
@@ -209,6 +219,7 @@ companies:
       - Sunnyvale
       - Mountain View
       - Palo Alto
+      - Santa Clara
 
   - name: General Motors
     slug: general-motors
@@ -223,6 +234,7 @@ companies:
       - Sunnyvale
       - Mountain View
       - Palo Alto
+      - Santa Clara
 
   - name: Harvey
     slug: harvey
@@ -237,6 +249,7 @@ companies:
       - Sunnyvale
       - Mountain View
       - Palo Alto
+      - Santa Clara
 
   - name: HPE
     slug: hpe
@@ -251,6 +264,7 @@ companies:
       - Sunnyvale
       - Mountain View
       - Palo Alto
+      - Santa Clara
 
   - name: Instacart
     slug: instacart
@@ -265,6 +279,7 @@ companies:
       - Sunnyvale
       - Mountain View
       - Palo Alto
+      - Santa Clara
 
   - name: Intel
     slug: intel
@@ -279,6 +294,7 @@ companies:
       - Sunnyvale
       - Mountain View
       - Palo Alto
+      - Santa Clara
 
   - name: KLA
     slug: kla
@@ -293,6 +309,7 @@ companies:
       - Sunnyvale
       - Mountain View
       - Palo Alto
+      - Santa Clara
 
   - name: Mastercard
     slug: mastercard
@@ -307,6 +324,7 @@ companies:
       - Sunnyvale
       - Mountain View
       - Palo Alto
+      - Santa Clara
 
   - name: NVIDIA
     slug: nvidia
@@ -321,6 +339,7 @@ companies:
       - Sunnyvale
       - Mountain View
       - Palo Alto
+      - Santa Clara
 
   - name: Notion
     slug: notion
@@ -335,6 +354,7 @@ companies:
       - Sunnyvale
       - Mountain View
       - Palo Alto
+      - Santa Clara
 
   - name: Otter.ai
     slug: otter-ai
@@ -349,6 +369,7 @@ companies:
       - Sunnyvale
       - Mountain View
       - Palo Alto
+      - Santa Clara
 
   - name: Pinterest
     slug: pinterest
@@ -363,6 +384,7 @@ companies:
       - Sunnyvale
       - Mountain View
       - Palo Alto
+      - Santa Clara
 
   - name: PlayStation
     slug: playstation
@@ -377,6 +399,7 @@ companies:
       - Sunnyvale
       - Mountain View
       - Palo Alto
+      - Santa Clara
 
   - name: Reddit
     slug: reddit
@@ -391,6 +414,7 @@ companies:
       - Sunnyvale
       - Mountain View
       - Palo Alto
+      - Santa Clara
 
   - name: Roblox
     slug: roblox
@@ -405,6 +429,7 @@ companies:
       - Sunnyvale
       - Mountain View
       - Palo Alto
+      - Santa Clara
 
   - name: Salesforce
     slug: salesforce
@@ -419,6 +444,7 @@ companies:
       - Sunnyvale
       - Mountain View
       - Palo Alto
+      - Santa Clara
 
   - name: Samsung Research America
     slug: samsung-research-america
@@ -433,6 +459,7 @@ companies:
       - Sunnyvale
       - Mountain View
       - Palo Alto
+      - Santa Clara
 
   - name: ServiceNow
     slug: servicenow
@@ -449,6 +476,7 @@ companies:
       - Sunnyvale
       - Mountain View
       - Palo Alto
+      - Santa Clara
 
   - name: Snap
     slug: snap
@@ -463,6 +491,7 @@ companies:
       - Sunnyvale
       - Mountain View
       - Palo Alto
+      - Santa Clara
 
   - name: Tinder
     slug: tinder
@@ -477,6 +506,7 @@ companies:
       - Sunnyvale
       - Mountain View
       - Palo Alto
+      - Santa Clara
 
   - name: Visa
     slug: visa
@@ -493,6 +523,7 @@ companies:
       - Sunnyvale
       - Mountain View
       - Palo Alto
+      - Santa Clara
 
   - name: Waymo
     slug: waymo
@@ -507,6 +538,7 @@ companies:
       - Sunnyvale
       - Mountain View
       - Palo Alto
+      - Santa Clara
 
   - name: Zoom
     slug: zoom
@@ -521,3 +553,4 @@ companies:
       - Sunnyvale
       - Mountain View
       - Palo Alto
+      - Santa Clara
