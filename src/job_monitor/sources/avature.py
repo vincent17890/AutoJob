@@ -35,11 +35,12 @@ class AvatureSource:
 
     def fetch_jobs(self, company: CompanyConfig) -> list[JobPosting]:
         first_page_url = self.endpoint_for(company)
+        max_pages = int(company.extra.get("max_pages", self._max_pages))
         summaries_by_id: dict[str, _AvatureJobSummary] = {}
         offset_param: str | None = None
         offset = 0
 
-        for page in range(self._max_pages):
+        for page in range(max_pages):
             page_url = (
                 first_page_url if page == 0 else _with_query(first_page_url, {offset_param: offset})
             )
@@ -82,7 +83,7 @@ class AvatureSource:
             or summary.description
         )
         posting_url = str(job_data.get("url") or summary.url)
-        source_job_id = str(job_data.get("identifier") or summary.source_job_id)
+        source_job_id = _identifier_text(job_data.get("identifier")) or summary.source_job_id
 
         return JobPosting(
             stable_job_id=source_job_id,
@@ -179,11 +180,17 @@ def _parse_search_results(html: str, page_url: str) -> list[_AvatureJobSummary]:
 
 
 def _parse_detail_link(href: str) -> tuple[str, str] | None:
-    path = urlsplit(unescape(href)).path
+    parsed = urlsplit(unescape(href))
+    path = parsed.path
     match = re.search(r"/(?P<kind>JobDetail|FolderDetail)/[^/?#]+/(?P<id>\d+)(?:/)?$", path)
-    if not match:
-        return None
-    return match.group("id"), match.group("kind")
+    if match:
+        return match.group("id"), match.group("kind")
+    query = dict(parse_qsl(parsed.query, keep_blank_values=True))
+    job_id = query.get("jobId") or query.get("folderId")
+    if job_id and re.search(r"/(?P<kind>JobDetail|FolderDetail)$", path):
+        kind = "FolderDetail" if "folderId" in query else "JobDetail"
+        return job_id, kind
+    return None
 
 
 def _offset_param(summaries: list[_AvatureJobSummary]) -> str:
@@ -296,6 +303,15 @@ def _employment_type(value: Any) -> str | None:
     if isinstance(value, list):
         return ", ".join(str(item) for item in value if item)
     return str(value).replace("_", "-").title() if value else None
+
+
+def _identifier_text(value: Any) -> str | None:
+    if isinstance(value, dict):
+        for key in ["value", "name", "@id"]:
+            if value.get(key):
+                return str(value[key])
+        return None
+    return str(value) if value else None
 
 
 def _description_text(value: Any) -> str | None:

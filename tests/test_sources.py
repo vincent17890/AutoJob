@@ -282,6 +282,31 @@ def test_avature_accepts_careers_url_without_identifier() -> None:
     assert source.endpoint_for(company) == "https://example.avature.net/careers/SearchJobs"
 
 
+def test_avature_supports_query_job_id_detail_links(fixture_text: Any) -> None:
+    source = AvatureSource(
+        FakeTextHttpClient(  # type: ignore[arg-type]
+            [
+                fixture_text("avature_search_query_job_id.html"),
+                fixture_text("avature_detail.html"),
+            ]
+        )
+    )
+    company = CompanyConfig(
+        name="Example",
+        source_type=SourceType.AVATURE,
+        careers_url="https://example.avature.net/careers/SearchJobs",
+    )
+
+    jobs = source.fetch_jobs(company)
+
+    assert len(jobs) == 1
+    assert jobs[0].source_job_id == "REQ-12345"
+    assert jobs[0].posting_url == (
+        "https://example.avature.net/careers/JobDetail/"
+        "United-States-Machine-Learning-Engineer/12345"
+    )
+
+
 def test_avature_uses_job_offset_pagination(fixture_text: Any) -> None:
     client = FakeTextHttpClient(
         [
@@ -295,6 +320,28 @@ def test_avature_uses_job_offset_pagination(fixture_text: Any) -> None:
     source = AvatureSource(client)  # type: ignore[arg-type]
     source.fetch_jobs(_company(SourceType.AVATURE))
     assert "jobOffset=2" in client.urls[1]
+
+
+def test_avature_respects_company_max_pages(fixture_text: Any) -> None:
+    client = FakeTextHttpClient(
+        [
+            fixture_text("avature_search.html"),
+            fixture_text("avature_detail.html"),
+            fixture_text("avature_detail_missing_fields.html"),
+        ]
+    )
+    source = AvatureSource(client)  # type: ignore[arg-type]
+    company = CompanyConfig(
+        name="Example",
+        source_type=SourceType.AVATURE,
+        careers_url="https://example.avature.net/careers/SearchJobs",
+        extra={"max_pages": 1},
+    )
+
+    jobs = source.fetch_jobs(company)
+
+    assert len(jobs) == 2
+    assert all("jobOffset=" not in url for url in client.urls)
 
 
 def test_smartrecruiters_uses_configured_country_filter(fixture_json: Any) -> None:

@@ -171,6 +171,23 @@ companies:
       - Menlo Park
       - Los Altos
 
+  - name: Deloitte
+    slug: deloitte
+    enabled: true
+    source_type: avature
+    careers_url: https://apply.deloitte.com/en_US/careers/SearchJobs
+    extra:
+      max_pages: 2
+    location_filters:
+      - United States
+      - San Jose
+      - Sunnyvale
+      - Mountain View
+      - Palo Alto
+      - Santa Clara
+      - Menlo Park
+      - Los Altos
+
   - name: Experian
     slug: experian
     enabled: true
@@ -608,6 +625,23 @@ companies:
     ats_identifier: tri
     careers_url: https://jobs.lever.co/tri
     api_endpoint: https://api.lever.co/v0/postings/tri?mode=json
+    location_filters:
+      - United States
+      - San Jose
+      - Sunnyvale
+      - Mountain View
+      - Palo Alto
+      - Santa Clara
+      - Menlo Park
+      - Los Altos
+
+  - name: TSMC
+    slug: tsmc
+    enabled: true
+    source_type: avature
+    careers_url: https://careers.tsmc.com/en_US/careers/SearchJobs
+    extra:
+      max_pages: 2
     location_filters:
       - United States
       - San Jose
