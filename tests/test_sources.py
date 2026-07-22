@@ -307,6 +307,51 @@ def test_avature_supports_query_job_id_detail_links(fixture_text: Any) -> None:
     )
 
 
+def test_avature_extracts_expanded_locations(fixture_text: Any) -> None:
+    source = AvatureSource(
+        FakeTextHttpClient(  # type: ignore[arg-type]
+            [
+                fixture_text("avature_search_query_job_id.html"),
+                fixture_text("avature_detail_expanded_locations.html"),
+            ]
+        )
+    )
+    company = CompanyConfig(
+        name="Example",
+        source_type=SourceType.AVATURE,
+        careers_url="https://example.avature.net/careers/SearchJobs",
+    )
+
+    jobs = source.fetch_jobs(company)
+
+    assert jobs[0].location == (
+        "Arlington/Rosslyn, Virginia, United States; "
+        "Austin, Texas, United States; "
+        "San Jose, California, United States"
+    )
+
+
+def test_avature_extracts_div_label_fields(fixture_text: Any) -> None:
+    source = AvatureSource(
+        FakeTextHttpClient(  # type: ignore[arg-type]
+            [
+                fixture_text("avature_search_query_job_id.html"),
+                fixture_text("avature_detail_div_fields.html"),
+            ]
+        )
+    )
+    company = CompanyConfig(
+        name="Example",
+        source_type=SourceType.AVATURE,
+        careers_url="https://example.avature.net/careers/SearchJobs",
+    )
+
+    jobs = source.fetch_jobs(company)
+
+    assert jobs[0].location == "Taiwan"
+    assert jobs[0].department == "Engineering"
+
+
 def test_avature_uses_job_offset_pagination(fixture_text: Any) -> None:
     client = FakeTextHttpClient(
         [

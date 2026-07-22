@@ -70,10 +70,11 @@ class AvatureSource:
             or "Untitled role"
         )
         location = (
-            _location_text(job_data.get("jobLocation"))
+            _expanded_locations_text(detail_html)
+            or _location_text(job_data.get("jobLocation"))
             or _field_text(
                 detail_html,
-                ["location", "locations"],
+                ["primary location", "job location", "location", "locations"],
             )
             or summary.location
         )
@@ -92,7 +93,10 @@ class AvatureSource:
             location=location,
             employment_type=_employment_type(job_data.get("employmentType"))
             or _field_text(detail_html, ["employment type", "job type", "work type"]),
-            department=_field_text(detail_html, ["department", "team", "category"])
+            department=_field_text(
+                detail_html,
+                ["business area", "business function", "department", "team", "category"],
+            )
             or summary.department,
             description=description,
             posting_url=posting_url,
@@ -101,6 +105,25 @@ class AvatureSource:
             source_job_id=source_job_id,
             date_posted=_parse_date(job_data.get("datePosted")),
         )
+
+
+def _expanded_locations_text(html: str) -> str | None:
+    block = re.search(
+        r"Same job available.*?(?=<section\b|<article\b|</header>|</body>)",
+        html,
+        flags=re.IGNORECASE | re.DOTALL,
+    )
+    if not block:
+        return None
+    locations = [
+        _clean_html(item)
+        for item in re.findall(
+            r"<p\b[^>]*class=[\"'][^\"']*paragraph[^\"']*[\"'][^>]*>(.*?)</p>",
+            block.group(0),
+            flags=re.IGNORECASE | re.DOTALL,
+        )
+    ]
+    return "; ".join(location for location in locations if location) or None
 
 
 class _AvatureJobSummary:
@@ -289,7 +312,10 @@ def _location_text(value: Any) -> str | None:
             address.get("addressRegion"),
             _country_name(address.get("addressCountry")),
         ]
-        return ", ".join(str(part) for part in parts if part) or None
+        text = ", ".join(str(part) for part in parts if part)
+        if text:
+            return text
+        return str(address.get("streetAddress")) if address.get("streetAddress") else None
     return None
 
 
@@ -327,13 +353,28 @@ def _description_from_html(html: str) -> str | None:
 
 
 def _field_text(html: str, labels: list[str]) -> str | None:
+    expected_labels = {label.casefold() for label in labels}
     for label, value in re.findall(
         r"<dt[^>]*>(.*?)</dt>\s*<dd[^>]*>(.*?)</dd>",
         html,
         flags=re.IGNORECASE | re.DOTALL,
     ):
         label_text = _clean_html(label).casefold()
-        if any(label_text == expected.casefold() for expected in labels):
+        if label_text in expected_labels:
+            value_text = _clean_html(value)
+            return value_text[:200] if value_text else None
+
+    for label, value in re.findall(
+        (
+            r"<div\b[^>]*class=[\"'][^\"']*article__content__view__field__label[^\"']*"
+            r"[\"'][^>]*>(.*?)</div>\s*<div\b[^>]*class=[\"'][^\"']*"
+            r"article__content__view__field__value[^\"']*[\"'][^>]*>(.*?)</div>"
+        ),
+        html,
+        flags=re.IGNORECASE | re.DOTALL,
+    ):
+        label_text = _clean_html(label).casefold()
+        if label_text in expected_labels:
             value_text = _clean_html(value)
             return value_text[:200] if value_text else None
 
