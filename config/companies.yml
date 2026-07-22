@@ -235,6 +235,21 @@ companies:
       - Palo Alto
       - Santa Clara
 
+  - name: GRAIL
+    slug: grail
+    enabled: true
+    source_type: lever
+    ats_identifier: grailbio
+    careers_url: https://jobs.lever.co/grailbio
+    api_endpoint: https://api.lever.co/v0/postings/grailbio?mode=json
+    location_filters:
+      - United States
+      - San Jose
+      - Sunnyvale
+      - Mountain View
+      - Palo Alto
+      - Santa Clara
+
   - name: General Motors
     slug: general-motors
     enabled: true
@@ -522,6 +537,21 @@ companies:
       - Palo Alto
       - Santa Clara
 
+  - name: Toyota Research Institute
+    slug: toyota-research-institute
+    enabled: true
+    source_type: lever
+    ats_identifier: tri
+    careers_url: https://jobs.lever.co/tri
+    api_endpoint: https://api.lever.co/v0/postings/tri?mode=json
+    location_filters:
+      - United States
+      - San Jose
+      - Sunnyvale
+      - Mountain View
+      - Palo Alto
+      - Santa Clara
+
   - name: Visa
     slug: visa
     enabled: true
@@ -561,6 +591,21 @@ companies:
     ats_identifier: zoom
     careers_url: https://zoom.wd5.myworkdayjobs.com/Zoom
     api_endpoint: https://zoom.wd5.myworkdayjobs.com/wday/cxs/zoom/Zoom/jobs
+    location_filters:
+      - United States
+      - San Jose
+      - Sunnyvale
+      - Mountain View
+      - Palo Alto
+      - Santa Clara
+
+  - name: Zoox
+    slug: zoox
+    enabled: true
+    source_type: lever
+    ats_identifier: zoox
+    careers_url: https://jobs.lever.co/zoox
+    api_endpoint: https://api.lever.co/v0/postings/zoox?mode=json
     location_filters:
       - United States
       - San Jose
