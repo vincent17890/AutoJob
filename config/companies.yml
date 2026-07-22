@@ -531,6 +531,24 @@ companies:
       - Menlo Park
       - Los Altos
 
+  - name: SAP
+    slug: sap
+    enabled: true
+    source_type: successfactors
+    careers_url: https://jobs.sap.com/search/
+    api_endpoint: https://jobs.sap.com/search/?q=&locationsearch=United%20States
+    extra:
+      max_pages: 8
+    location_filters:
+      - United States
+      - San Jose
+      - Sunnyvale
+      - Mountain View
+      - Palo Alto
+      - Santa Clara
+      - Menlo Park
+      - Los Altos
+
   - name: Salesforce
     slug: salesforce
     enabled: true

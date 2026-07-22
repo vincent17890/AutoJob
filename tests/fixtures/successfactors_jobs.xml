@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jobs>
+  <job>
+    <title>Machine Learning Engineer, Recommendations</title>
+    <date>Fri, 17 Jul 2026 00:00:00 GMT</date>
+    <referencenumber>SF-123</referencenumber>
+    <ID>9001-en_US</ID>
+    <url>https://career4.successfactors.com/career?career_ns=job_listing&amp;company=example&amp;navBarLevel=JOB_SEARCH&amp;rcm_site_locale=en_US&amp;career_job_req_id=9001</url>
+    <company>Example</company>
+    <city>San Jose</city>
+    <state>CA</state>
+    <country>US</country>
+    <location>San Jose, CA, US</location>
+    <description><![CDATA[Build recommendation systems and LLM retrieval infrastructure.]]></description>
+    <employmenttype>Full Time</employmenttype>
+    <department>Engineering</department>
+  </job>
+  <job>
+    <title>Sales Manager</title>
+    <date>2026-07-18</date>
+    <referencenumber>SF-124</referencenumber>
+    <url>https://career4.successfactors.com/career?career_job_req_id=9002</url>
+    <city>New York</city>
+    <state>NY</state>
+    <country>US</country>
+  </job>
+</jobs>

@@ -17,6 +17,7 @@ class SourceType(StrEnum):
     EIGHTFOLD = "eightfold"
     ICIMS = "icims"
     AVATURE = "avature"
+    SUCCESSFACTORS = "successfactors"
     CUSTOM = "custom"
 
 
@@ -158,6 +159,7 @@ class CompanyConfig(BaseModel):
                 SourceType.EIGHTFOLD,
                 SourceType.ICIMS,
                 SourceType.AVATURE,
+                SourceType.SUCCESSFACTORS,
             }
             and not self.api_endpoint
             and not self.ats_identifier

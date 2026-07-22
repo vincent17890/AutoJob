@@ -30,6 +30,7 @@ Implemented and tested:
 - Eightfold public careers search endpoint
 - iCIMS public career-portal HTML with JobPosting JSON-LD detail pages
 - Avature public `SearchJobs` career-portal HTML with `JobDetail` / `FolderDetail` pages
+- SAP SuccessFactors public XML job listing feed and server-rendered RMK search pages
 
 Explicitly unsupported in this MVP:
 
@@ -47,6 +48,11 @@ iCIMS customer API.
 Avature support uses anonymous public career portals such as
 `https://example.avature.net/careers/SearchJobs`. Avature portals are highly configurable, so
 verify each tenant path before enabling it.
+SAP SuccessFactors support uses either the anonymous XML listing feed documented for Recruiting
+Management / Recruiting Marketing career sites, for example
+`https://career4.successfactors.com/career?company=<company-id>&career_ns=job_listing_summary&resultType=XML`.
+It also supports server-rendered RMK search pages such as `https://jobs.sap.com/search/`.
+It does not use authenticated SuccessFactors OData APIs.
 
 ## Setup
 
@@ -133,6 +139,24 @@ companies:
     ats_identifier: example
     careers_url: https://example.avature.net/careers/SearchJobs
 ```
+
+Example SAP SuccessFactors entry:
+
+```yaml
+companies:
+  - name: Example Company
+    slug: example-company
+    enabled: true
+    source_type: successfactors
+    ats_identifier: verified-successfactors-company-id
+    careers_url: https://career4.successfactors.com/career
+    extra:
+      locale: en_US
+```
+
+For SAP SuccessFactors XML feeds, `ats_identifier` is the SuccessFactors `company` query value.
+For RMK search pages, set `api_endpoint` to the verified search URL. The career host varies by
+tenant and datacenter, so verify the exact host before enabling a company.
 
 ## Local execution
 
@@ -289,6 +313,9 @@ ruff format .
   pages and JobPosting JSON-LD on detail pages.
 - Avature support is limited to public `SearchJobs` portals that expose server-rendered
   `/JobDetail/.../{id}` or `/FolderDetail/.../{id}` links. It does not use private Avature APIs.
+- SAP SuccessFactors support is limited to public XML job listing feeds and server-rendered RMK
+  search pages. Tenant-specific XML/HTML mappings can vary, so verify title, URL, location,
+  description, and date fields for each company.
 - The MVP avoids browser automation, so JavaScript-only career pages need custom adapters or API discovery.
 - Verify ATS identifiers before enabling additional companies.
 - Google Sheets is adequate for a personal monitor, but not for high-volume analytics.

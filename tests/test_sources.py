@@ -11,6 +11,7 @@ from job_monitor.sources.greenhouse import GreenhouseSource
 from job_monitor.sources.icims import ICIMSSource
 from job_monitor.sources.lever import LeverSource
 from job_monitor.sources.smartrecruiters import SmartRecruitersSource
+from job_monitor.sources.successfactors import SuccessFactorsSource
 from job_monitor.sources.workday import WorkdaySource, _parse_workday_date_text, _posting_url
 
 
@@ -270,6 +271,101 @@ def test_parse_avature_response(fixture_text: Any) -> None:
         "United-States-Machine-Learning-Engineer/12345"
     )
     assert "LLM retrieval" in (jobs[0].description or "")
+
+
+def test_parse_successfactors_response(fixture_text: Any) -> None:
+    source = SuccessFactorsSource(
+        FakeTextHttpClient([fixture_text("successfactors_jobs.xml")])  # type: ignore[arg-type]
+    )
+    company = CompanyConfig(
+        name="Example",
+        source_type=SourceType.SUCCESSFACTORS,
+        ats_identifier="example",
+        careers_url="https://career4.successfactors.com/career",
+    )
+
+    jobs = source.fetch_jobs(company)
+
+    assert len(jobs) == 2
+    assert jobs[0].title == "Machine Learning Engineer, Recommendations"
+    assert jobs[0].location == "San Jose, CA, US"
+    assert jobs[0].employment_type == "Full Time"
+    assert jobs[0].department == "Engineering"
+    assert jobs[0].source_job_id == "SF-123"
+    assert jobs[0].date_posted == date(2026, 7, 17)
+    assert jobs[0].posting_url == (
+        "https://career4.successfactors.com/career?career_ns=job_listing&"
+        "company=example&navBarLevel=JOB_SEARCH&rcm_site_locale=en_US&career_job_req_id=9001"
+    )
+    assert "recommendation systems" in (jobs[0].description or "")
+
+
+def test_successfactors_endpoint_uses_company_id_and_xml_feed() -> None:
+    source = SuccessFactorsSource()
+    company = CompanyConfig(
+        name="Example",
+        source_type=SourceType.SUCCESSFACTORS,
+        ats_identifier="example",
+        careers_url="https://career4.successfactors.com/career",
+        extra={"locale": "en_US"},
+    )
+
+    endpoint = source.endpoint_for(company)
+
+    assert endpoint.startswith("https://career4.successfactors.com/career?")
+    assert "company=example" in endpoint
+    assert "career_ns=job_listing_summary" in endpoint
+    assert "resultType=XML" in endpoint
+    assert "rcm_site_locale=en_US" in endpoint
+
+
+def test_successfactors_handles_missing_fields(fixture_text: Any) -> None:
+    source = SuccessFactorsSource(
+        FakeTextHttpClient([fixture_text("successfactors_missing_fields.xml")])  # type: ignore[arg-type]
+    )
+    company = CompanyConfig(
+        name="Example",
+        source_type=SourceType.SUCCESSFACTORS,
+        ats_identifier="example",
+        careers_url="https://career4.successfactors.com/career",
+    )
+
+    jobs = source.fetch_jobs(company)
+
+    assert jobs[0].title == "Untitled role"
+    assert jobs[0].location is None
+    assert jobs[0].source_job_id == "SF-125"
+
+
+def test_parse_successfactors_html_search_response(fixture_text: Any) -> None:
+    source = SuccessFactorsSource(
+        FakeTextHttpClient(  # type: ignore[arg-type]
+            [
+                fixture_text("successfactors_search.html"),
+                fixture_text("successfactors_detail.html"),
+            ]
+        )
+    )
+    company = CompanyConfig(
+        name="SAP",
+        source_type=SourceType.SUCCESSFACTORS,
+        api_endpoint="https://jobs.sap.com/search/?q=&locationsearch=United%20States",
+    )
+
+    jobs = source.fetch_jobs(company)
+
+    assert len(jobs) == 1
+    assert jobs[0].title == "SAP SuccessFactors iXp Intern - AI Software Developer"
+    assert jobs[0].location == "San Ramon, CA"
+    assert jobs[0].employment_type == "Regular Full Time"
+    assert jobs[0].department == "Software-Design and Development"
+    assert jobs[0].source_job_id == "452056"
+    assert jobs[0].date_posted == date(2026, 7, 17)
+    assert jobs[0].posting_url == (
+        "https://jobs.sap.com/job/San-Ramon-SAP-SuccessFactors-iXp-Intern-"
+        "AI-Software-Developer-CA-94583/1413842633/"
+    )
+    assert "LLM evaluation" in (jobs[0].description or "")
 
 
 def test_avature_accepts_careers_url_without_identifier() -> None:
