@@ -6,6 +6,26 @@ from job_monitor.config import CompanyConfig, FilterConfig
 from job_monitor.deduplication import normalize_text
 from job_monitor.models import JobPosting, MatchStatus
 
+_BROAD_LOCATION_FILTERS = {
+    "united states",
+    "usa",
+    "us",
+    "u s",
+    "u s a",
+    "remote",
+    "hybrid",
+    "california",
+    "ca",
+    "new york",
+    "ny",
+    "washington",
+    "wa",
+    "texas",
+    "tx",
+    "massachusetts",
+    "ma",
+}
+
 
 @dataclass(frozen=True)
 class FilterDecision:
@@ -17,6 +37,14 @@ class FilterDecision:
 def _contains_any(text: str, keywords: list[str]) -> list[str]:
     normalized_text = normalize_text(text)
     return [keyword for keyword in keywords if normalize_text(keyword) in normalized_text]
+
+
+def _specific_location_filters(location_filters: list[str]) -> list[str]:
+    return [
+        location_filter
+        for location_filter in location_filters
+        if normalize_text(location_filter) not in _BROAD_LOCATION_FILTERS
+    ]
 
 
 def _job_text(job: JobPosting) -> str:
@@ -62,10 +90,9 @@ def evaluate_job(
 
     location_filters = company.location_filters or global_filters.locations
     location_text = job.location or ""
-    location_matches = _contains_any(location_text, location_filters)
-    is_remote = "remote" in normalize_text(location_text)
-    location_allowed = location_matches or (global_filters.remote_allowed and is_remote)
-    if location_filters and not location_allowed:
+    specific_location_filters = _specific_location_filters(location_filters)
+    location_matches = _contains_any(location_text, specific_location_filters)
+    if location_filters and not location_matches:
         return FilterDecision(
             False,
             [],
@@ -93,8 +120,6 @@ def evaluate_job(
         reasons.append(f"description matched: {', '.join(description_matches)}")
     if location_matches:
         reasons.append(f"location matched: {', '.join(location_matches)}")
-    elif is_remote:
-        reasons.append("remote role allowed")
 
     return FilterDecision(True, matched_keywords, "; ".join(reasons))
 

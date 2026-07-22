@@ -39,12 +39,12 @@ def test_avoids_duplicate_sheet_rows() -> None:
     job = JobPosting(
         company="Example",
         title="Machine Learning Engineer",
-        location="Remote, United States",
+        location="San Jose, California, United States",
         description="Build machine learning systems.",
         source="greenhouse",
         source_job_id="1",
     )
-    config = AppConfig(filters=FilterConfig(), companies=[company])
+    config = AppConfig(filters=FilterConfig(locations=["San Jose"]), companies=[company])
     sheet = InMemorySheetStore(existing_keys={job.deduplication_key or ""})
 
     summary = run_monitor(
@@ -65,12 +65,12 @@ def test_one_source_failure_does_not_stop_other_sources() -> None:
     job = JobPosting(
         company="Good",
         title="Applied Scientist",
-        location="United States",
+        location="Mountain View, California, United States",
         description="Machine learning research.",
         source="lever",
         source_job_id="2",
     )
-    config = AppConfig(filters=FilterConfig(), companies=[failing, good])
+    config = AppConfig(filters=FilterConfig(locations=["Mountain View"]), companies=[failing, good])
     sheet = InMemorySheetStore()
     sources: dict[SourceType, JobSource] = {
         SourceType.GREENHOUSE: FailingSource(),
