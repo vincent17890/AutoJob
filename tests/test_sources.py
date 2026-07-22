@@ -5,6 +5,7 @@ from typing import Any
 
 from job_monitor.config import CompanyConfig, SourceType
 from job_monitor.sources.ashby import AshbySource
+from job_monitor.sources.avature import AvatureSource
 from job_monitor.sources.eightfold import EightfoldSource
 from job_monitor.sources.greenhouse import GreenhouseSource
 from job_monitor.sources.icims import ICIMSSource
@@ -236,6 +237,64 @@ def test_parse_icims_response(fixture_text: Any) -> None:
     )
     assert "LLM retrieval" in (jobs[0].description or "")
     assert "in_iframe=1" in source.endpoint_for(company)
+
+
+def test_parse_avature_response(fixture_text: Any) -> None:
+    source = AvatureSource(
+        FakeTextHttpClient(  # type: ignore[arg-type]
+            [
+                fixture_text("avature_search.html"),
+                fixture_text("avature_search_page_2.html"),
+                fixture_text("avature_detail.html"),
+                fixture_text("avature_detail_missing_fields.html"),
+                fixture_text("avature_detail_missing_fields.html"),
+            ]
+        )
+    )
+    company = CompanyConfig(
+        name="Example",
+        source_type=SourceType.AVATURE,
+        ats_identifier="example",
+    )
+
+    jobs = source.fetch_jobs(company)
+
+    assert len(jobs) == 3
+    assert jobs[0].title == "Machine Learning Engineer"
+    assert jobs[0].location == "Menlo Park, CA, US"
+    assert jobs[0].employment_type == "Full-Time"
+    assert jobs[0].source_job_id == "REQ-12345"
+    assert jobs[0].date_posted == date(2026, 7, 18)
+    assert jobs[0].posting_url == (
+        "https://example.avature.net/careers/JobDetail/"
+        "United-States-Machine-Learning-Engineer/12345"
+    )
+    assert "LLM retrieval" in (jobs[0].description or "")
+
+
+def test_avature_accepts_careers_url_without_identifier() -> None:
+    company = CompanyConfig(
+        name="Example",
+        source_type=SourceType.AVATURE,
+        careers_url="https://example.avature.net/careers/SearchJobs",
+    )
+    source = AvatureSource()
+    assert source.endpoint_for(company) == "https://example.avature.net/careers/SearchJobs"
+
+
+def test_avature_uses_job_offset_pagination(fixture_text: Any) -> None:
+    client = FakeTextHttpClient(
+        [
+            fixture_text("avature_search.html"),
+            fixture_text("avature_search_page_2.html"),
+            fixture_text("avature_detail.html"),
+            fixture_text("avature_detail_missing_fields.html"),
+            fixture_text("avature_detail_missing_fields.html"),
+        ]
+    )
+    source = AvatureSource(client)  # type: ignore[arg-type]
+    source.fetch_jobs(_company(SourceType.AVATURE))
+    assert "jobOffset=2" in client.urls[1]
 
 
 def test_smartrecruiters_uses_configured_country_filter(fixture_json: Any) -> None:

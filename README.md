@@ -29,6 +29,7 @@ Implemented and tested:
 - SmartRecruiters public Posting API
 - Eightfold public careers search endpoint
 - iCIMS public career-portal HTML with JobPosting JSON-LD detail pages
+- Avature public `SearchJobs` career-portal HTML with `JobDetail` / `FolderDetail` pages
 
 Explicitly unsupported in this MVP:
 
@@ -43,6 +44,9 @@ the Eightfold `domain`, for example `eightfold.ai`.
 iCIMS support uses anonymous public career portals such as
 `https://careers-example.icims.com/jobs/search?in_iframe=1`; it does not use the authenticated
 iCIMS customer API.
+Avature support uses anonymous public career portals such as
+`https://example.avature.net/careers/SearchJobs`. Avature portals are highly configurable, so
+verify each tenant path before enabling it.
 
 ## Setup
 
@@ -116,6 +120,18 @@ companies:
     source_type: icims
     ats_identifier: careers-example
     careers_url: https://careers-example.icims.com
+```
+
+Example Avature entry:
+
+```yaml
+companies:
+  - name: Example Company
+    slug: example-company
+    enabled: true
+    source_type: avature
+    ats_identifier: example
+    careers_url: https://example.avature.net/careers/SearchJobs
 ```
 
 ## Local execution
@@ -271,6 +287,8 @@ ruff format .
 - Eightfold support is limited to public `app.eightfold.ai` careers pages with verified domains.
 - iCIMS support is limited to public career portals that expose server-rendered `/jobs/search`
   pages and JobPosting JSON-LD on detail pages.
+- Avature support is limited to public `SearchJobs` portals that expose server-rendered
+  `/JobDetail/.../{id}` or `/FolderDetail/.../{id}` links. It does not use private Avature APIs.
 - The MVP avoids browser automation, so JavaScript-only career pages need custom adapters or API discovery.
 - Verify ATS identifiers before enabling additional companies.
 - Google Sheets is adequate for a personal monitor, but not for high-volume analytics.

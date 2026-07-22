@@ -16,6 +16,7 @@ class SourceType(StrEnum):
     SMARTRECRUITERS = "smartrecruiters"
     EIGHTFOLD = "eightfold"
     ICIMS = "icims"
+    AVATURE = "avature"
     CUSTOM = "custom"
 
 
@@ -156,9 +157,11 @@ class CompanyConfig(BaseModel):
                 SourceType.SMARTRECRUITERS,
                 SourceType.EIGHTFOLD,
                 SourceType.ICIMS,
+                SourceType.AVATURE,
             }
             and not self.api_endpoint
             and not self.ats_identifier
+            and not self.careers_url
         )
         if supported_source_without_locator:
             raise ValueError(f"{self.source_type} companies require api_endpoint or ats_identifier")
