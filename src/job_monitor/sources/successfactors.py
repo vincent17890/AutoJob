@@ -32,9 +32,7 @@ class SuccessFactorsSource:
             raise ValueError("SuccessFactors companies require api_endpoint or careers_url")
         company_id = company.ats_identifier or company.extra.get("company_id")
         if not company_id:
-            raise ValueError(
-                "SuccessFactors companies require ats_identifier or extra.company_id"
-            )
+            raise ValueError("SuccessFactors companies require ats_identifier or extra.company_id")
         params = {
             "company": company_id,
             "career_ns": "job_listing_summary",
@@ -134,9 +132,7 @@ def _parse_xml_jobs(xml_text: str, company: CompanyConfig, source_name: str) -> 
         )
         posting_url = _first(values, "url", "link", "joburl", "applyurl", "apply_url")
         location = _location(values)
-        description = _clean_html(
-            _first(values, "description", "jobdescription", "summary") or ""
-        )
+        description = _clean_html(_first(values, "description", "jobdescription", "summary") or "")
 
         jobs.append(
             JobPosting(
@@ -407,9 +403,7 @@ def _clean_html_with_lines(value: str) -> str:
     text = re.sub(r"</\s*(p|div|li|tr)\s*>", "\n", text, flags=re.IGNORECASE)
     text = re.sub(r"<[^>]+>", " ", text)
     lines = [
-        re.sub(r"\s+", " ", unescape(line)).strip()
-        for line in text.splitlines()
-        if line.strip()
+        re.sub(r"\s+", " ", unescape(line)).strip() for line in text.splitlines() if line.strip()
     ]
     return "\n".join(lines)
 
