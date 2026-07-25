@@ -278,11 +278,9 @@ After insertion, rows are sorted by company, first-seen date descending, then ti
    class MySource:
        source_name = "my-source"
 
-       def endpoint_for(self, company: CompanyConfig) -> str:
-           ...
+       def endpoint_for(self, company: CompanyConfig) -> str: ...
 
-       def fetch_jobs(self, company: CompanyConfig) -> list[JobPosting]:
-           ...
+       def fetch_jobs(self, company: CompanyConfig) -> list[JobPosting]: ...
    ```
 
 3. Keep all API-specific assumptions inside the adapter.
