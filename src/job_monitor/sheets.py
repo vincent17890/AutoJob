@@ -3,7 +3,7 @@ from __future__ import annotations
 import json
 import logging
 import os
-from datetime import date, datetime
+from datetime import date
 from typing import Any, Protocol
 
 from google.oauth2.service_account import Credentials
@@ -139,7 +139,6 @@ class GoogleSheetStore:
             f"{JOBS_SHEET}!A:O",
             [job_to_row(job) for job in jobs],
         )
-        self.sort_jobs()
 
     def append_run_log(self, summary: RunSummary) -> None:
         self.ensure_worksheets()
@@ -159,40 +158,6 @@ class GoogleSheetStore:
                 ]
             ],
         )
-
-    def sort_jobs(self) -> None:
-        metadata = self._service.spreadsheets().get(spreadsheetId=self._spreadsheet_id).execute()
-        sheet_id = None
-        for sheet in metadata.get("sheets", []):
-            properties = sheet.get("properties", {})
-            if properties.get("title") == JOBS_SHEET:
-                sheet_id = properties.get("sheetId")
-                break
-        if sheet_id is None:
-            return
-
-        self._service.spreadsheets().batchUpdate(
-            spreadsheetId=self._spreadsheet_id,
-            body={
-                "requests": [
-                    {
-                        "sortRange": {
-                            "range": {
-                                "sheetId": sheet_id,
-                                "startRowIndex": 1,
-                                "startColumnIndex": 0,
-                                "endColumnIndex": len(JOB_HEADERS),
-                            },
-                            "sortSpecs": [
-                                {"dimensionIndex": 0, "sortOrder": "ASCENDING"},
-                                {"dimensionIndex": 6, "sortOrder": "DESCENDING"},
-                                {"dimensionIndex": 1, "sortOrder": "ASCENDING"},
-                            ],
-                        }
-                    }
-                ]
-            },
-        ).execute()
 
     def _ensure_header(self, sheet_name: str, headers: list[str]) -> None:
         values = self._values_get(f"{sheet_name}!A1:{chr(ord('A') + len(headers) - 1)}1")
@@ -237,13 +202,6 @@ class InMemorySheetStore:
 
     def append_jobs(self, jobs: list[JobPosting]) -> None:
         self.jobs.extend(jobs)
-        self.jobs.sort(
-            key=lambda job: (
-                job.company,
-                _reverse_datetime(job.date_first_seen),
-                job.title,
-            )
-        )
 
     def append_run_log(self, summary: RunSummary) -> None:
         self.run_logs.append(summary)
@@ -271,7 +229,3 @@ def job_to_row(job: JobPosting) -> list[str]:
 
 def _format_date(value: date | None) -> str:
     return value.isoformat() if value else ""
-
-
-def _reverse_datetime(value: datetime) -> float:
-    return -value.timestamp()

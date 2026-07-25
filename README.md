@@ -267,7 +267,7 @@ Match Reason, Posting URL, Application URL, Source, Source Job ID,
 Deduplication Key, Status, Notes
 ```
 
-After insertion, rows are sorted by company, first-seen date descending, then title. The header row is preserved.
+New rows are appended to the end of the `Jobs` worksheet without reordering existing rows.
 
 ## Add a new adapter
 
